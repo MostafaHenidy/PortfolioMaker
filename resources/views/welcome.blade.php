@@ -13,6 +13,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
+    </script>
     @livewireStyles
 </head>
 
@@ -21,17 +24,36 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container-lg">
             <a class="navbar-brand fw-bold text-primary" href="#">
-                <i class="fas fa-file-pdf"></i> PDF Share
+                <i class="fas fa-file-pdf"></i> Portfolio Builder
             </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             @if (auth()->user())
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button class="btn btn-outline-primary btn-sm ms-auto">Logout</button>
-                </form>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                {{ auth()->user()->name }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a></li>
+                                <li>
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button class="dropdown-item" type="submit">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             @else
-                <div>
-                    <a href="{{ route('login') }}" class="btn btn-outline-primary btn-sm ms-auto">Login</a>
-                    <a href="{{ route('register') }}" class="btn btn-outline-secondary btn-sm ms-auto">Register</a>
+                <div class="ms-auto">
+                    <a href="{{ route('login') }}" class="btn btn-outline-primary btn-sm">Login</a>
+                    <a href="{{ route('register') }}" class="btn btn-outline-secondary btn-sm">Register</a>
                 </div>
             @endif
         </div>
@@ -52,58 +74,7 @@
                 <div class="col-lg-6">
                     <div class="card shadow-lg border-0 rounded-4 upload-card">
                         <!-- Upload Section -->
-                        <livewire:upload-document />
-
-                        <!-- Success Section -->
-                        {{-- <div class="card-body p-4 p-md-5 d-none" id="successSection">
-                            <h3 class="card-title mb-4 text-center fw-bold text-success">
-                                <i class="fas fa-check-circle"></i> Upload Successful!
-                            </h3>
-
-                            <!-- File Info -->
-                            <div class="alert alert-light border mb-4">
-                                <p class="mb-1 text-muted small">File Name</p>
-                                <p class="fw-semibold mb-0" id="successFileName"></p>
-                            </div>
-
-                            <!-- Shareable Link -->
-                            <div class="mb-4">
-                                <p class="text-muted small mb-2">Shareable Link</p>
-                                <div class="input-group mb-2">
-                                    <input type="text" class="form-control" id="shareLink" readonly>
-                                    <button class="btn btn-outline-primary" type="button" id="copyBtn">
-                                        <i class="fas fa-copy"></i> Copy
-                                    </button>
-                                </div>
-                                <div id="copySuccess" class="alert alert-success d-none py-2 small mb-0">
-                                    <i class="fas fa-check"></i> Copied to clipboard!
-                                </div>
-                            </div>
-
-                            <!-- QR Code -->
-                            <div class="text-center mb-4">
-                                <p class="text-muted small mb-2">QR Code</p>
-                                <div class="qr-container">
-                                    <img id="qrCode" src="/placeholder.svg" alt="QR Code"
-                                        class="img-fluid rounded-2">
-                                </div>
-                            </div>
-
-                            <!-- Action Buttons -->
-                            <div class="d-grid gap-2 d-md-flex">
-                                <button class="btn btn-primary flex-md-grow-1" id="downloadPdfBtn">
-                                    <i class="fas fa-download"></i> Download PDF
-                                </button>
-                                <button class="btn btn-outline-primary flex-md-grow-1" id="downloadQrBtn">
-                                    <i class="fas fa-image"></i> Download QR
-                                </button>
-                            </div>
-
-                            <!-- New Upload Button -->
-                            <button class="btn btn-light w-100 mt-3" id="newUploadBtn">
-                                <i class="fas fa-plus"></i> Upload Another
-                            </button>
-                        </div> --}}
+                            <livewire:upload-document />
                     </div>
                 </div>
             </div>
@@ -119,9 +90,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
-    </script>
+
     @livewireScripts
 
 
