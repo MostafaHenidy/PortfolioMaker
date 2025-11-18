@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable,InteractsWithMedia;
+    use HasFactory, Notifiable, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -50,5 +50,13 @@ class User extends Authenticatable implements HasMedia
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function skills()
+    {
+        return $this->hasMany(Skill::class);
+    }
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
     }
 }

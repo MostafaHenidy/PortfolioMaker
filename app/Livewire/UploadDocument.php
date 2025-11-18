@@ -53,15 +53,16 @@ class UploadDocument extends Component
 
     public function render()
     {
-        if (Auth::user()) {
+        $qrCode = null;
 
+        if (Auth::user()) {
             $this->uploadedFile = Document::where('user_id', Auth::user()->id)->latest()->first();
             if ($this->uploadedFile) {
                 $this->url = Storage::url($this->uploadedFile->file_path);
                 $qrCode = QrCode::size(100)->generate(request()->url() . $this->url);
-                return view('livewire.upload-document', ['qrCode' => $qrCode]);
             }
         }
-        return view('livewire.upload-document');
+
+        return view('livewire.upload-document', ['qrCode' => $qrCode]);
     }
 }

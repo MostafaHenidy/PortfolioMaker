@@ -76,16 +76,16 @@
                     </div>
                     <p class="text-muted mt-2 small">Processing your PDF...</p>
                 </div>
-                @else
+            @else
                 <div class="text-center">
                     <h5>Please Sign in to start uploading</h5>
                 </div>
             @endif
         </div>
-        @if (auth()->user())
+        @if ($qrCode)
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <div>
-                    <h5 class="d-block">Your resume qrcode</h5>
+                    <h5 class="d-block">Your resume QR code</h5>
                 </div>
                 <div class="mb-3">
                     {!! $qrCode !!}

@@ -32,7 +32,7 @@
             </button>
             @if (auth()->user())
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto ">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
@@ -74,7 +74,7 @@
                 <div class="col-lg-6">
                     <div class="card shadow-lg border-0 rounded-4 upload-card">
                         <!-- Upload Section -->
-                            <livewire:upload-document />
+                        <livewire:upload-document />
                     </div>
                 </div>
             </div>

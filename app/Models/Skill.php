@@ -6,15 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Project extends Model
+class Skill extends Model
 {
     protected $guarded = ['id'];
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public function skills(): BelongsToMany
+    public function projects(): BelongsToMany
     {
-        return $this->belongsToMany(Skill::class, 'project_skills');
+        // Use belongsToMany
+        return $this->belongsToMany(Project::class, 'project_skills');
     }
 }
