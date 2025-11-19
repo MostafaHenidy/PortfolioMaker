@@ -4,25 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
 use App\Http\Requests\SkillRequest;
+use App\Mail\ContactFormMail;
+use App\Models\PortfolioMessage;
 use App\Models\Project;
+use App\Models\Settings;
 use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
     public function dashboard()
     {
-        $skills = Skill::all();
-        $projects = Project::all();
+        $skills = Skill::where('user_id', Auth::user()->id)->get();
+        $projects = Project::where('user_id', Auth::user()->id)->get();
+        $settings = Settings::where('user_id', Auth::user()->id)->first();
         return view('dashboard', get_defined_vars());
-    }
-    public function portfolio()
-    {
-        $skills = Skill::all();
-        $projects = Project::all();
-        return view('protfolio', get_defined_vars());
     }
     // User Info
     public function updateUserInfo(Request $request)
@@ -49,6 +48,26 @@ class UserController extends Controller
         }
 
         return redirect()->back()->with('success', 'User info updated successfully');
+    }
+    public function updateUserSettings(Request $request)
+    {
+        $request->validate([
+            'about'    => 'required|boolean',
+            'skills'   => 'required|boolean',
+            'projects' => 'required|boolean',
+            'contact'  => 'required|boolean',
+        ]);
+
+        $settings = Settings::where('user_id', Auth::id())->firstOrFail();
+
+        $settings->update([
+            'about'    => $request->boolean('about'),
+            'skills'   => $request->boolean('skills'),
+            'projects' => $request->boolean('projects'),
+            'contact'  => $request->boolean('contact'),
+        ]);
+
+        return back()->with('success', 'User settings updated successfully');
     }
     // Project CRUD
     public function storeProjects(ProjectRequest $request)
@@ -83,7 +102,7 @@ class UserController extends Controller
 
         $skillsIds = $request->input('project-skill', []);
         $project->skills()->sync($skillsIds);
-        
+
         if ($request->hasFile('projectImage')) {
             $project->clearMediaCollection('projectImage');
             $project->addMediaFromRequest('projectImage')->toMediaCollection('projectImage');
@@ -136,5 +155,41 @@ class UserController extends Controller
             return redirect()->back()->with('success', 'Project Deleted successfully');
         }
         return redirect()->back()->with('failure', 'Can not find Project');
+    }
+    // Portfolio 
+    public function myPortfolio()
+    {
+        $skills = Skill::where('user_id', Auth::user()->id)->get();
+        $projects = Project::where('user_id', Auth::user()->id)->get();
+        $settings = Settings::where('user_id', Auth::user()->id)->firstOrFail();
+
+        return view('myProtfolio', get_defined_vars());
+    }
+    public function sendMessage(Request $request, $userName)
+    {
+        $portfolioOwner = User::where('name', $userName)->firstOrFail();
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'message' => 'required|string',
+        ]);
+        $messageRecord = PortfolioMessage::create([
+            'recipient_user_id' => $portfolioOwner->id,
+            'from_name' => $validated['name'],
+            'from_email' => $validated['email'],
+            'message' => $validated['message'],
+        ]);
+        Mail::to($portfolioOwner->email)->send(new ContactFormMail($validated));
+        return back()->with('success', 'Your message has been sent to ' . $portfolioOwner->name . '!');
+    }
+    public function viewUserProtfolio($userName)
+    {
+        $user = User::where('name', 'like', '%' . $userName . '%')->firstOrFail();
+        if ($user) {
+            $skills = Skill::where('user_id', $user->id)->get();
+            $projects = Project::where('user_id', $user->id)->get();
+            $settings = Settings::where('user_id', $user->id)->firstOrFail();
+        }
+        return view('userProtfolio', get_defined_vars());
     }
 }

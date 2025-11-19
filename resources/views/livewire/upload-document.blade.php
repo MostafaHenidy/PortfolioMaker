@@ -87,9 +87,12 @@
                 <div>
                     <h5 class="d-block">Your resume QR code</h5>
                 </div>
-                <div class="mb-3">
-                    {!! $qrCode !!}
-                </div>
+
+                <div>{!! $qrCode !!}</div>
+
+                <button wire:click="downloadQrCode" class="btn btn-primary my-3">
+                    Download your QRCode
+                </button>
             </div>
         @endif
     </div>

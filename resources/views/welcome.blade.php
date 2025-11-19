@@ -23,8 +23,8 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container-lg">
-            <a class="navbar-brand fw-bold text-primary" href="#">
-                <i class="fas fa-file-pdf"></i> Portfolio Builder
+            <a class="navbar-brand fw-bold text-primary" href="{{ url('/') }}">
+                Portfolio Builder
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +84,7 @@
     <!-- Footer -->
     <footer class="bg-white border-top py-4 mt-5">
         <div class="container-lg text-center text-muted small">
-            <p class="mb-0">&copy; 2025 PDF Share. All rights reserved.</p>
+            <p class="mb-0">&copy; 2025 PortfolioMaker. All rights reserved.</p>
         </div>
     </footer>
 

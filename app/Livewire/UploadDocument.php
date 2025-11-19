@@ -18,6 +18,7 @@ class UploadDocument extends Component
     public $uploadedFile;
     public $document;
     public $url;
+    public $qrCodeSvg = null;
     protected $rules = [
         'pdfFile' => 'required|file|mimes:pdf|max:10240',
     ];
@@ -51,18 +52,35 @@ class UploadDocument extends Component
         $this->reset('pdfFile');
     }
 
+    public function downloadQrCode()
+    {
+        if (!$this->qrCodeSvg) {
+            return;
+        }
+
+        $fileName = 'qrcode.svg';
+        $svgContent = $this->qrCodeSvg;
+
+        return response()->streamDownload(function () use ($svgContent) {
+            echo $svgContent;
+        }, $fileName, [
+            'Content-Type' => 'image/svg+xml',
+        ]);
+    }
     public function render()
     {
-        $qrCode = null;
 
         if (Auth::user()) {
             $this->uploadedFile = Document::where('user_id', Auth::user()->id)->latest()->first();
             if ($this->uploadedFile) {
                 $this->url = Storage::url($this->uploadedFile->file_path);
                 $qrCode = QrCode::size(100)->generate(request()->url() . $this->url);
+                $this->qrCodeSvg = (string) $qrCode;
             }
         }
 
-        return view('livewire.upload-document', ['qrCode' => $qrCode]);
+        return view('livewire.upload-document', [
+            'qrCode' => $this->qrCodeSvg,
+        ]);
     }
 }
