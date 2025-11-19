@@ -18,6 +18,13 @@ class UserController extends Controller
         $projects = Project::all();
         return view('dashboard', get_defined_vars());
     }
+    public function portfolio()
+    {
+        $skills = Skill::all();
+        $projects = Project::all();
+        return view('protfolio', get_defined_vars());
+    }
+    // User Info
     public function updateUserInfo(Request $request)
     {
         $validated = $request->validate([
@@ -43,10 +50,57 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'User info updated successfully');
     }
-    public function portfolio()
+    // Project CRUD
+    public function storeProjects(ProjectRequest $request)
     {
-        return view('protfolio');
+        $validated = $request->validated();
+        $user = Auth::user();
+        $project = Project::create([
+            'user_id' => $user->id,
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+        ]);
+        if ($request->input('project-skill', [])) {
+            $skillsIds = $request->input('project-skill', []);
+            $project->skills()->sync($skillsIds);
+        }
+        if ($request->hasFile('projectImage')) {
+            $project->clearMediaCollection('projectImage');
+            $project->addMediaFromRequest('projectImage')->toMediaCollection('projectImage');
+        }
+        return redirect()->back()->with('success', 'Project create successfully');
     }
+
+    public function updateProject(ProjectRequest $request, $id)
+    {
+        $validated = $request->validated();
+        $project = Project::findOrFail($id);
+
+        $project->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+        ]);
+
+        $skillsIds = $request->input('project-skill', []);
+        $project->skills()->sync($skillsIds);
+        
+        if ($request->hasFile('projectImage')) {
+            $project->clearMediaCollection('projectImage');
+            $project->addMediaFromRequest('projectImage')->toMediaCollection('projectImage');
+        }
+        return redirect()->back()->with('success', 'Project updated successfully');
+    }
+
+    public function deleteProject($id)
+    {
+        $project = Project::findOrFail($id);
+        if ($project) {
+            $project->delete();
+            return redirect()->back()->with('success', 'Project Deleted successfully');
+        }
+        return redirect()->back()->with('failure', 'Can not find Project');
+    }
+    // Skill CRUD
     public function storeSkills(SkillRequest $request)
     {
         $validated = $request->validated();
@@ -61,22 +115,7 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Skills create successfully');
     }
-    public function storeProjects(ProjectRequest $request)
-    {
-        $validated = $request->validated();
-        $user = Auth::user();
-        $project = Project::create([
-            'user_id' => $user->id,
-            'title' => $validated['title'],
-            'description' => $validated['description'],
-        ]);
-        if ($request->input('project-skill', [])) {
-            $skillsIds = $request->input('project-skill', []);
-            $project->skills()->sync($skillsIds);
-        }
 
-        return redirect()->back()->with('success', 'Project create successfully');
-    }
     public function updateSkill(SkillRequest $request, $id)
     {
         $validated = $request->validated();
@@ -88,20 +127,14 @@ class UserController extends Controller
         ]);
         return redirect()->back()->with('success', 'Skill updated successfully');
     }
-    public function updateProject(ProjectRequest $request, $id)
-    {
-        // dd('working');
-        $validated = $request->validated();
-        $project = Project::findOrFail($id);
 
-        $project->update([
-            'title' => $validated['title'],
-            'description' => $validated['description'],
-        ]);
-        if ($request->input('project-skill', [])) {
-            $skillsIds = $request->input('project-skill', []);
-            $project->skills()->sync($skillsIds);
+    public function deleteSkill($id)
+    {
+        $skill = Skill::findOrFail($id);
+        if ($skill) {
+            $skill->delete();
+            return redirect()->back()->with('success', 'Project Deleted successfully');
         }
-        return redirect()->back()->with('success', 'Project updated successfully');
+        return redirect()->back()->with('failure', 'Can not find Project');
     }
 }

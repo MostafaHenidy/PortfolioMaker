@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jane Doe - Portfolio</title>
+    <title>{{ auth()->user()->name }} - Portfolio</title>
     <style>
         :root {
             --primary-color: #0d6efd;
@@ -398,7 +398,7 @@
     <!-- Header -->
     <header>
         <nav>
-            <div class="logo">Jane Doe</div>
+            <div class="logo">{{ auth()->user()->name }}</div>
             <ul>
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
@@ -411,9 +411,9 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <img src="https://placehold.co/150x150/667eea/ffffff?text=JD" alt="Jane Doe">
-            <h1>Hello, I'm Jane Doe</h1>
-            <p>A passionate <strong>Full Stack Developer</strong> building modern web solutions.</p>
+            <img src="{{ getAvatar(auth()->user()) }}" alt="{{ auth()->user()->name }}">
+            <h1>Hello, I'm <span>{{ auth()->user()->name }}</span></h1>
+            <p>A passionate <strong>{{ auth()->user()->professional_headline }}</strong> .</p>
             <a href="#projects" class="btn-primary">View My Work</a>
         </div>
     </section>
@@ -422,18 +422,15 @@
     <section id="about">
         <h2>About Me</h2>
         <div class="about-content">
-            <p>I specialize in creating beautiful, functional, and highly optimized web applications. With 5 years of
-                experience in the industry, I have a deep understanding of the modern web stack, focusing on
-                Laravel/Livewire for robust backend solutions and clean, scalable frontend architecture. I thrive on
-                solving complex problems and delivering exceptional user experiences from concept to deployment.</p>
+            <p>{{ auth()->user()->bio }}.</p>
         </div>
         <div class="stats">
             <div class="stat-card">
-                <div class="stat-number">5+</div>
+                <div class="stat-number">{{ auth()->user()->experience }}+</div>
                 <div class="stat-label">Years of Experience</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">12</div>
+                <div class="stat-number">{{ auth()->user()->projects_made }}</div>
                 <div class="stat-label">Completed Projects</div>
             </div>
         </div>
@@ -443,42 +440,17 @@
     <section id="skills">
         <h2>Skills & Expertise</h2>
         <div class="skills-container">
-            <div class="skill-item">
-                <div class="skill-name">
-                    <span>Laravel</span>
-                    <span class="skill-percentage">95%</span>
+            @foreach ($skills as $skill)
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>{{ $skill->name }}</span>
+                        <span class="skill-percentage">{{ $skill->level }}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: {{ $skill->level }}%;"></div>
+                    </div>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 95%;"></div>
-                </div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-name">
-                    <span>Livewire</span>
-                    <span class="skill-percentage">90%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 90%;"></div>
-                </div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-name">
-                    <span>Tailwind CSS</span>
-                    <span class="skill-percentage">85%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 85%;"></div>
-                </div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-name">
-                    <span>Vanilla JavaScript</span>
-                    <span class="skill-percentage">80%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 80%;"></div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </section>
 
@@ -486,45 +458,24 @@
     <section id="projects">
         <h2>Featured Projects</h2>
         <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-image"></div>
-                <div class="project-content">
-                    <h3 class="project-title">E-Commerce Platform</h3>
-                    <p class="project-desc">A full-featured shopping platform built with Laravel, Livewire, and Stripe
-                        integration. Focus on clean UX and scalable architecture.</p>
-                    <div class="project-tags">
-                        <span class="tag">Laravel</span>
-                        <span class="tag">Livewire</span>
-                        <span class="tag">Tailwind</span>
+            @foreach ($projects as $project)
+                <div class="project-card">
+                    {{-- @if (getProjectImage($project)) --}}
+                    <img class="project-image" src="{{ getProjectImage($project) }}" alt="{{ $project->name }}">
+                    {{-- @else
+                        <div class="project-image"></div>
+                    @endif --}}
+                    <div class="project-content">
+                        <h3 class="project-title">{{ $project->title }}</h3>
+                        <p class="project-desc">{{ $project->description }}.</p>
+                        <div class="project-tags">
+                            @foreach ($project->skills as $skill)
+                                <span class="tag">{{ $skill->name }}</span>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="project-card">
-                <div class="project-image"></div>
-                <div class="project-content">
-                    <h3 class="project-title">Realtime Chat Application</h3>
-                    <p class="project-desc">A highly responsive chat application leveraging Laravel Echo, Redis, and
-                        Livewire for instant updates and minimal latency.</p>
-                    <div class="project-tags">
-                        <span class="tag">Livewire</span>
-                        <span class="tag">Redis</span>
-                        <span class="tag">JavaScript</span>
-                    </div>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-image"></div>
-                <div class="project-content">
-                    <h3 class="project-title">RESTful API Service</h3>
-                    <p class="project-desc">Built a secure and documented API service for a third-party application
-                        using Laravel Sanctum for token authentication.</p>
-                    <div class="project-tags">
-                        <span class="tag">Laravel</span>
-                        <span class="tag">Sanctum</span>
-                        <span class="tag">MySQL</span>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </section>
 

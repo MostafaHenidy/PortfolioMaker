@@ -390,7 +390,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
-                    Settings
+                    Account Settings
                 </button>
             </nav>
             <div class="sidebar-footer ">
@@ -409,7 +409,8 @@
             <!-- Profile Tab -->
             <div id="profile-tab" class="tab-content active">
                 <h3>Edit Profile & Bio</h3>
-                <form class="form-group" method="POST" action="{{ route('dashboard.update') }}">
+                <form class="form-group" method="POST" action="{{ route('dashboard.update') }}"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('patch')
                     <div class="form-group">
@@ -439,7 +440,7 @@
                     </div>
                     <div class="form-group">
                         <label for="avatar">Avatar Image</label>
-                        <input type="file" id="avatar" class="form-control">
+                        <input type="file" id="avatar" name="avatar" class="form-control">
                     </div>
                     <button type="submit" class="btn btn-primary">Save Profile Changes</button>
                 </form>
@@ -452,7 +453,7 @@
                     data-bs-target="#userProfileModal">
                     Add Projects
                 </button>
-                <!-- Modal -->
+                <!-- Create Project Modal -->
                 <div class="modal fade" id="userProfileModal" tabindex="-1" aria-labelledby="userProfileModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
@@ -464,7 +465,8 @@
                                     aria-label="Close"></button>
                             </div>
 
-                            <form id="projectForm" method="POST" action="{{ route('dashboard.projects.store') }}">
+                            <form id="projectForm" method="POST" action="{{ route('dashboard.projects.store') }}"
+                                enctype="multipart/form-data">
                                 <div class="modal-body">
                                     @csrf
                                     <div class="mb-3">
@@ -476,6 +478,13 @@
                                         <label for="projectDesc" class="form-label">Description</label>
                                         <textarea class="form-control" id="projectDesc" rows="3" name="description"
                                             placeholder="Briefly describe the project, technologies used, and your contribution." required></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-group">
+                                            <label for="projectImage">Project Image</label>
+                                            <input type="file" id="projectImage" name="projectImage"
+                                                class="form-control">
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         @foreach ($skills as $skill)
@@ -508,6 +517,7 @@
                                 <div class="list-item-actions">
                                     <button type="button" class="btn-edit" data-bs-toggle="modal"
                                         data-bs-target="#userEditProjectModal-{{ $project->id }}">Edit</button>
+                                    {{-- Edit Project modal --}}
                                     <div class="modal fade" id="userEditProjectModal-{{ $project->id }}"
                                         tabindex="-1" aria-labelledby="userEditProjectModalLabel"
                                         aria-hidden="true">
@@ -523,7 +533,7 @@
                                                 </div>
                                                 <form
                                                     action="{{ route('dashboard.project.update', ['id' => $project->id]) }}"
-                                                    method="POST">
+                                                    method="POST" enctype="multipart/form-data">
                                                     @csrf
                                                     @method('PATCH')
                                                     <div class="modal-body">
@@ -539,10 +549,17 @@
                                                             <textarea class="form-control" id="projectDesc" rows="3" name="description">{{ $project->description }}</textarea>
                                                         </div>
                                                         <div class="mb-3">
+                                                            <div class="form-group">
+                                                                <label for="projectImage">Project Image</label>
+                                                                <input type="file" id="projectImage"
+                                                                    name="projectImage" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
                                                             @foreach ($skills as $skill)
                                                                 <div class="form-check">
                                                                     <input name="project-skill[]"
-                                                                        @if (checkSkill($project, $skill)) ? checked @endif
+                                                                        {{ checkSkill($project, $skill) }}
                                                                         class="form-check-input" type="checkbox"
                                                                         value="{{ $skill->id }}"
                                                                         id="checkDefault">
@@ -565,7 +582,45 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="btn-delete">Delete</button>
+                                    <button type="button" class="btn-delete" data-bs-toggle="modal"
+                                        data-bs-target="#userDeleteProjectModal-{{ $project->id }}">Delete</button>
+                                    <!-- Delete Project Modal -->
+                                    <div class="modal fade" id="userDeleteProjectModal-{{ $project->id }}"
+                                        tabindex="-1" aria-labelledby="userDeleteProjectModalLabel"
+                                        aria-hidden="true">
+                                        <div
+                                            class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="userDeleteProjectModalLabel">Delete
+                                                        Project
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <form
+                                                    action="{{ route('dashboard.project.delete', ['id' => $project->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <p>Are you sure you want to delete
+                                                                <span>"{{ $project->title }}"</span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-danger mt-1">Delete
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
@@ -580,7 +635,7 @@
                     data-bs-target="#userSkillsModal">
                     Add Skills
                 </button>
-                <!-- Modal -->
+                <!-- Create Skill Modal -->
                 <div class="modal fade" id="userSkillsModal" tabindex="-1" aria-labelledby="userSkillsModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
@@ -625,6 +680,7 @@
                                 <div class="list-item-actions">
                                     <button type="button" class="btn-edit" data-bs-toggle="modal"
                                         data-bs-target="#userEditSkillModal--{{ $skill->id }}">Edit</button>
+                                    <!-- Edit Skill Modal -->
                                     <div class="modal fade" id="userEditSkillModal--{{ $skill->id }}"
                                         tabindex="-1" aria-labelledby="userEditSkillModalLabel" aria-hidden="true">
                                         <div
@@ -667,7 +723,45 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="btn-delete">Delete</button>
+                                    <button type="button" class="btn-delete" data-bs-toggle="modal"
+                                        data-bs-target="#userDeleteSkillModal-{{ $skill->id }}">Delete</button>
+                                    <!-- Delete skill Modal -->
+                                    <div class="modal fade" id="userDeleteSkillModal-{{ $skill->id }}"
+                                        tabindex="-1" aria-labelledby="userDeleteSkillModalLabel"
+                                        aria-hidden="true">
+                                        <div
+                                            class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="userDeleteSkillModalLabel">Delete
+                                                        skill
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <form
+                                                    action="{{ route('dashboard.skills.delete', ['id' => $skill->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <p>Are you sure you want to delete
+                                                                <span>"{{ $skill->name }}"</span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-danger mt-1">Delete
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
@@ -683,11 +777,18 @@
                 <p style="color: #666; margin-bottom: 1.5rem;">Manage account preferences and security settings.</p>
                 <div class="form-group">
                     <label for="email">Email Address</label>
-                    <input type="email" id="email" class="form-control" value="jane@example.com">
+                    <input type="email" id="email" name="email" class="form-control"
+                        value="{{ auth()->user()->email }}">
                 </div>
                 <div class="form-group">
-                    <label for="password">Change Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="Enter new password">
+                    <label for="password">New Password</label>
+                    <input type="password" id="password" name="password" class="form-control"
+                        placeholder="Enter new password">
+                </div>
+                <div class="form-group">
+                    <label for="password">Confirm Password</label>
+                    <input type="password" id="password" name="password_confirmation" class="form-control"
+                        placeholder="Enter new password">
                 </div>
                 <button class="btn btn-primary">Update Settings</button>
             </div>
