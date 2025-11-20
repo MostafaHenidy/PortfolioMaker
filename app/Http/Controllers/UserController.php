@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProjectRequest;
-use App\Http\Requests\SkillRequest;
+use App\Http\Requests\UpdateUserInfoRequest;
+use App\Http\Requests\UpdateUserSettingsRequest;
 use App\Mail\ContactFormMail;
 use App\Models\PortfolioMessage;
 use App\Models\Project;
 use App\Models\Settings;
 use App\Models\Skill;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
@@ -21,140 +23,37 @@ class UserController extends Controller
         $skills = Skill::where('user_id', Auth::user()->id)->get();
         $projects = Project::where('user_id', Auth::user()->id)->get();
         $settings = Settings::where('user_id', Auth::user()->id)->first();
-        return view('dashboard', get_defined_vars());
+        return view('dashboard.dashboard', get_defined_vars());
     }
     // User Info
-    public function updateUserInfo(Request $request)
+    public function updateUserInfo(UpdateUserInfoRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'professional_headline' => 'nullable|string|max:255',
-            'bio' => 'nullable|string|max:1000',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        $user = Auth::user();
-        $user->update([
-            'name' => $validated['name'],
-            'professional_headline' => $validated['professional_headline'],
-            'bio' => $validated['bio'],
-            'experience' => $request->experience,
-            'projects_made' => $request->projects_made,
-        ]);
-
-        if ($request->hasFile('avatar')) {
-            $user->clearMediaCollection('avatars');
-            $user->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+        DB::beginTransaction();
+        try {
+            Auth::user()->update($request->validated());
+            if ($request->hasFile('avatar')) {
+                $user->clearMediaCollection('avatars');
+                $user->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+            }
+            DB::commit();
+            return redirect()->back()->with('success', 'User info updated successfully!');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('failure', 'User info update failed due to' . $e->getMessage());
         }
-
-        return redirect()->back()->with('success', 'User info updated successfully');
     }
-    public function updateUserSettings(Request $request)
+    public function updateUserSettings(UpdateUserSettingsRequest $request)
     {
-        $request->validate([
-            'about'    => 'required|boolean',
-            'skills'   => 'required|boolean',
-            'projects' => 'required|boolean',
-            'contact'  => 'required|boolean',
-        ]);
-
-        $settings = Settings::where('user_id', Auth::id())->firstOrFail();
-
-        $settings->update([
-            'about'    => $request->boolean('about'),
-            'skills'   => $request->boolean('skills'),
-            'projects' => $request->boolean('projects'),
-            'contact'  => $request->boolean('contact'),
-        ]);
-
-        return back()->with('success', 'User settings updated successfully');
-    }
-    // Project CRUD
-    public function storeProjects(ProjectRequest $request)
-    {
-        $validated = $request->validated();
-        $user = Auth::user();
-        $project = Project::create([
-            'user_id' => $user->id,
-            'title' => $validated['title'],
-            'description' => $validated['description'],
-        ]);
-        if ($request->input('project-skill', [])) {
-            $skillsIds = $request->input('project-skill', []);
-            $project->skills()->sync($skillsIds);
+        DB::beginTransaction();
+        try {
+            $settings = Settings::where('user_id', Auth::id())->firstOrFail();
+            $settings->update($request->validated());
+            DB::commit();
+            return back()->with('success', 'User settings updated successfully');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return back()->with('failure', 'User settings update failed due to' . $e->getMessage());
         }
-        if ($request->hasFile('projectImage')) {
-            $project->clearMediaCollection('projectImage');
-            $project->addMediaFromRequest('projectImage')->toMediaCollection('projectImage');
-        }
-        return redirect()->back()->with('success', 'Project create successfully');
-    }
-
-    public function updateProject(ProjectRequest $request, $id)
-    {
-        $validated = $request->validated();
-        $project = Project::findOrFail($id);
-
-        $project->update([
-            'title' => $validated['title'],
-            'description' => $validated['description'],
-        ]);
-
-        $skillsIds = $request->input('project-skill', []);
-        $project->skills()->sync($skillsIds);
-
-        if ($request->hasFile('projectImage')) {
-            $project->clearMediaCollection('projectImage');
-            $project->addMediaFromRequest('projectImage')->toMediaCollection('projectImage');
-        }
-        return redirect()->back()->with('success', 'Project updated successfully');
-    }
-
-    public function deleteProject($id)
-    {
-        $project = Project::findOrFail($id);
-        if ($project) {
-            $project->delete();
-            return redirect()->back()->with('success', 'Project Deleted successfully');
-        }
-        return redirect()->back()->with('failure', 'Can not find Project');
-    }
-    // Skill CRUD
-    public function storeSkills(SkillRequest $request)
-    {
-        $validated = $request->validated();
-
-        $user = Auth::user();
-
-        $skill = Skill::create([
-            'user_id' => $user->id,
-            'name' => $validated['name'],
-            'level' => $validated['level'],
-        ]);
-
-        return redirect()->back()->with('success', 'Skills create successfully');
-    }
-
-    public function updateSkill(SkillRequest $request, $id)
-    {
-        $validated = $request->validated();
-        $skill = Skill::findOrFail($id);
-
-        $skill->update([
-            'name' => $validated['name'],
-            'level' => $validated['level'],
-        ]);
-        return redirect()->back()->with('success', 'Skill updated successfully');
-    }
-
-    public function deleteSkill($id)
-    {
-        $skill = Skill::findOrFail($id);
-        if ($skill) {
-            $skill->delete();
-            return redirect()->back()->with('success', 'Project Deleted successfully');
-        }
-        return redirect()->back()->with('failure', 'Can not find Project');
     }
     // Portfolio 
     public function myPortfolio()
@@ -163,24 +62,27 @@ class UserController extends Controller
         $projects = Project::where('user_id', Auth::user()->id)->get();
         $settings = Settings::where('user_id', Auth::user()->id)->firstOrFail();
 
-        return view('myProtfolio', get_defined_vars());
+        return view('myPortfolio', get_defined_vars());
     }
     public function sendMessage(Request $request, $userName)
     {
-        $portfolioOwner = User::where('name', $userName)->firstOrFail();
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'message' => 'required|string',
-        ]);
-        $messageRecord = PortfolioMessage::create([
-            'recipient_user_id' => $portfolioOwner->id,
-            'from_name' => $validated['name'],
-            'from_email' => $validated['email'],
-            'message' => $validated['message'],
-        ]);
-        Mail::to($portfolioOwner->email)->send(new ContactFormMail($validated));
-        return back()->with('success', 'Your message has been sent to ' . $portfolioOwner->name . '!');
+        DB::beginTransaction();
+        try {
+            $portfolioOwner = User::where('name', $userName)->firstOrFail();
+            $validated = $request->validated();
+            $messageRecord = PortfolioMessage::create([
+                'recipient_user_id' => $portfolioOwner->id,
+                'from_name' => $validated['name'],
+                'from_email' => $validated['email'],
+                'message' => $validated['message'],
+            ]);
+            Mail::to($portfolioOwner->email)->send(new ContactFormMail($validated));
+            DB::commit();
+            return back()->with('success', 'Your message has been sent to ' . $portfolioOwner->name . '!');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return back()->with('failure', 'Something went wrong' . $e->getMessage());
+        }
     }
     public function viewUserProtfolio($userName)
     {
@@ -190,6 +92,6 @@ class UserController extends Controller
             $projects = Project::where('user_id', $user->id)->get();
             $settings = Settings::where('user_id', $user->id)->firstOrFail();
         }
-        return view('userProtfolio', get_defined_vars());
+        return view('userPortfolio', get_defined_vars());
     }
 }

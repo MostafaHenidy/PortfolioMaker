@@ -53,7 +53,7 @@
             @else
                 <div class="ms-auto">
                     <a href="{{ route('login') }}" class="btn btn-outline-primary btn-sm">Login</a>
-                    <a href="{{ route('register') }}" class="btn btn-outline-secondary btn-sm">Register</a>
+                    <a href="{{ route('register') }}" class="btn btn-outline-secondary btn-sm">register</a>
                 </div>
             @endif
         </div>
