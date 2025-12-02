@@ -97,10 +97,11 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        .hero h1 {
+        .hero h2 {
+            color: whitesmoke;
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
         }
 
         .hero p {
@@ -140,12 +141,11 @@
             margin-bottom: 3rem;
             text-align: center;
             color: #2c3e50;
-            border-bottom: 3px solid var(--primary-color);
-            display: inline-block;
+            border-bottom: none;
+            display: block;
+            width: fit-content;
             padding-bottom: 0.5rem;
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
+            margin-inline: auto;
         }
 
         /* About Section */
@@ -394,16 +394,28 @@
     </style>
 </head>
 
-<body>
+<body @if (LaravelLocalization::getCurrentLocale() == 'ar') dir="rtl" @endif>
     <!-- Header -->
     <header>
         <nav>
             <div class="logo">{{ auth()->user()->name }}</div>
             <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">{{ __('keywords.about') }}</a></li>
+                <li><a href="#skills">{{ __('keywords.skills') }}</a></li>
+                <li><a href="#projects">{{ __('keywords.projects') }}</a></li>
+                <li><a href="#contact">{{ __('keywords.contact') }}</a></li>
+                <ul>
+                    @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        @if ($localeCode !== LaravelLocalization::getCurrentLocale())
+                            <li>
+                                <a rel="alternate" hreflang="{{ $localeCode }}"
+                                    href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                    {{ $properties['native'] }}
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
+                </ul>
             </ul>
         </nav>
     </header>
@@ -412,27 +424,27 @@
     <section class="hero">
         <div class="hero-content">
             <img src="{{ getAvatar(auth()->user()) }}" alt="{{ auth()->user()->name }}">
-            <h1>Hello, I'm <span>{{ auth()->user()->name }}</span></h1>
-            <p>A passionate <strong>{{ auth()->user()->professional_headline }}</strong> .</p>
-            <a href="#projects" class="btn-primary">View My Work</a>
+            <h2> {{ __('keywords.selfIntroduction') }} <span>{{ auth()->user()->name }}</span></h2>
+            <p>{{ __('keywords.passionate') }} <strong>{{ auth()->user()->professional_headline }}</strong> .</p>
+            <a href="#projects" class="btn-primary">{{ __('keywords.view my work') }}</a>
         </div>
     </section>
 
     <!-- About Section -->
     @if ($settings->about)
         <section id="about">
-            <h2>About Me</h2>
+            <h2 class="text-dark">{{ __('keywords.about') }}</h2>
             <div class="about-content">
                 <p>{{ auth()->user()->bio }}.</p>
             </div>
             <div class="stats">
                 <div class="stat-card">
                     <div class="stat-number">{{ auth()->user()->experience }}+</div>
-                    <div class="stat-label">Years of Experience</div>
+                    <div class="stat-label">{{ __('keywords.years of experience') }}</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">{{ auth()->user()->projects_made }}</div>
-                    <div class="stat-label">Completed Projects</div>
+                    <div class="stat-label">{{ __('keywords.completed projects') }}</div>
                 </div>
             </div>
         </section>
@@ -440,7 +452,7 @@
     <!-- Skills Section -->
     @if ($settings->skills)
         <section id="skills">
-            <h2>Skills & Expertise</h2>
+            <h2>{{ __('keywords.skills') }}</h2>
             <div class="skills-container">
                 @foreach ($skills as $skill)
                     <div class="skill-item">
@@ -459,15 +471,11 @@
     <!-- Projects Section -->
     @if ($settings->projects)
         <section id="projects">
-            <h2>Featured Projects</h2>
+            <h2>{{ __('keywords.featured projects') }}</h2>
             <div class="projects-grid">
                 @foreach ($projects as $project)
                     <div class="project-card">
-                        {{-- @if (getProjectImage($project)) --}}
                         <img class="project-image" src="{{ getProjectImage($project) }}" alt="{{ $project->name }}">
-                        {{-- @else
-                        <div class="project-image"></div>
-                    @endif --}}
                         <div class="project-content">
                             <h3 class="project-title">{{ $project->title }}</h3>
                             <p class="project-desc">{{ $project->description }}.</p>
@@ -485,22 +493,22 @@
     <!-- Contact Section -->
     @if ($settings->contact)
         <section id="contact">
-            <h2>Get In Touch</h2>
+            <h2>{{ __('keywords.get in touch') }}</h2>
             <div class="contact-container">
-                <p>Have a project in mind or just want to say hello? Send me an email and I'll get back to you as soon
-                    as
-                    possible.</p>
+                <p>{{ __('keywords.project description') }}</p>
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Your Name" required>
+                        <input type="text" class="form-control" placeholder={{ __('keywords.your name') }} required>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Your Email" required>
+                        <input type="email" class="form-control" placeholder={{ __('keywords.your email') }}
+                            required>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" placeholder="Your Message" required></textarea>
+                        <textarea class="form-control" placeholder={{ __('keywords.your message') }} required></textarea>
                     </div>
-                    <button type="submit" class="btn-primary" style="width: 100%;">Send Message</button>
+                    <button type="submit" class="btn-primary"
+                        style="width: 100%;">{{ __('keywords.send message') }}</button>
                 </form>
             </div>
         </section>

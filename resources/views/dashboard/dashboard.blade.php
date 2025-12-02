@@ -122,6 +122,7 @@
             margin-left: 280px;
             overflow-y: auto;
             padding: 2rem;
+
         }
 
         .header {
@@ -342,6 +343,7 @@
             .header h2 {
                 font-size: 1.5rem;
             }
+
         }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -366,7 +368,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                     </svg>
-                    Profile & Bio
+                    {{ __('keywords.profile & bio') }}
                 </button>
                 <button class="nav-item" data-tab="projects">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -374,7 +376,7 @@
                             d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2h2m4 0v.01M10 11h.01M5 15h.01">
                         </path>
                     </svg>
-                    Projects
+                    {{ __('keywords.projects') }}
                 </button>
                 <button class="nav-item" data-tab="skills">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -382,7 +384,7 @@
                             d="M9 3v2m6-2v2M9 19v2m6-2v2M5 15a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v6a2 2 0 01-2 2H5z">
                         </path>
                     </svg>
-                    Skills & Tools
+                    {{ __('keywords.skill & tools') }}
                 </button>
                 <button class="nav-item" data-tab="settings">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -392,22 +394,35 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
-                    Account Settings
+                    {{ __('keywords.account settings') }}
+                </button>
+                <button class="nav-item">
+                    <i class="bi bi-translate"></i>
+                    @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        @if ($localeCode !== LaravelLocalization::getCurrentLocale())
+                            <a style="text-decoration: none ;color:white;" rel="alternate"
+                                hreflang="{{ $localeCode }}"
+                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                {{ $properties['native'] }}
+                            </a>
+                        @endif
+                    @endforeach
                 </button>
             </nav>
             <div class="sidebar-footer ">
                 <a href="{{ route('dashboard.myPortfolio') }}" class="btn-view-portfolio" style="text-decoration: none">
-                    View Live Portfolio</a>
+                    {{ __('keywords.view live portfolio') }}
+                </a>
             </div>
         </aside>
 
         <!-- Main Content -->
-        <div class="main-content">
+        <div class="main-content" @if (LaravelLocalization::getCurrentLocale() == 'ar') dir="rtl" @endif>
             <div class="header">
-                <h2>Dashboard</h2>
-                <div class="user-info">Logged in as: <span>{{ auth()->user()->email }}</span></div>
+                <h2> {{ __('keywords.dashboard') }} </h2>
+                <div class="user-info">{{ __('keywords.logged in as:') }} <span>{{ auth()->user()->email }}</span>
+                </div>
             </div>
-
             <!-- Profile Tab -->
             @include('dashboard.profile')
             <!-- Projects Tab -->

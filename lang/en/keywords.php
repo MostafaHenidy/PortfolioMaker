@@ -1,0 +1,57 @@
+<?php
+return [
+    // Portfolio Page
+    'about' => 'About Me',
+    'skills' => 'My Skills',
+    'projects' => 'My Projects',
+    'contact' => 'Contact Me',
+    'selfIntroduction' => 'Hello, my name is',
+    'passionate' => 'I am passionate about',
+    'view my work' => 'View My Work',
+    'years of experience' => 'Years of Experience',
+    'completed projects' => 'Completed Projects',
+    'featured projects' => 'Featured Projects',
+    'get in touch' => 'Get in Touch',
+    'project description' => 'If you would like to execute a project or just want to say hello, feel free to send an email, and I will get back to you as soon as possible.',
+    'your name' => 'Your Name',
+    'your email' => 'Your Email',
+    'your message' => 'Your Message',
+    'send message' => 'Send',
+    // Dashboard
+    'profile & bio' => 'Profile & Bio',
+    'skill & tools' => 'Skills & Tools',
+    'account settings' => 'Account Settings',
+    'view live portfolio' => 'View Live Portfolio',
+    'dashboard' => 'Dashboard',
+    'logged in as:' => 'Logged in as:',
+    // Edit Profile 
+    'name' => 'Full Name',
+    'professional headline' => 'Professional Headline',
+    'bio' => 'Biography',
+    'avatar image' => 'Avatar Image',
+    'save' => 'Save Changes',
+    'edit profile & bio' => 'Edit Profile & Bio',
+    // Edit Projects
+    'manage projects' => 'Manage Projects',
+    'add a new project' => 'Add A New Project',
+    'project title' => 'Project Title',
+    'description' => 'Description',
+    'project image' => 'Project Image',
+    'close' => 'Close',
+    'update project' => 'Update Project',
+    'delete project' => 'Delete Project',
+    'delete confirmation' => 'Are you sure you want to delete the project',
+    'delete ' => 'Delete',
+    'nothing to show' => 'Nothing to show',
+    // Edit Skills 
+    // Skills Page
+    'manage skills' => 'Manage Skills',
+    'add a new skill' => 'Add A New Skill',
+    'skill name' => 'Skill Name',
+    'level' => 'Level',
+    'update skill' => 'Update Skill',
+    'delete skill' => 'Delete Skill',
+    'delete confirmation skill' => 'Are you sure you want to delete the skill',
+    'manage account preferences' => 'Manage Account Preferences',
+
+];

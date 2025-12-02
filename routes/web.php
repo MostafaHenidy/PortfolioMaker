@@ -1,17 +1,19 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::group([
-    'middleware' => 'auth',
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth'],
     'as' => 'dashboard.'
 ], function () {
     Route::controller(UserController::class)->group(function () {
@@ -40,10 +42,5 @@ Route::group([
 });
 
 
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
 
 require __DIR__ . '/auth.php';

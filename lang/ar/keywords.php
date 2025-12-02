@@ -1,0 +1,57 @@
+<?php
+return [
+    // Portfolio Page
+    'about' => 'من أنا',
+    'skills' => 'مهاراتي',
+    'projects' => 'مشاريعي',
+    'contact' => 'تواصل معي',
+    'selfIntroduction' => 'مرحبًا، اسمي',
+    'passionate' => 'أنا شغوف بـ',
+    'view my work' => 'عرض أعمالي',
+    'years of experience' => 'سنوات الخبرة',
+    'completed projects' => 'المشاريع المنجزة',
+    'featured projects' => 'أبرز المشاريع',
+    'get in touch' => 'تواصل معنا',
+    'project description' => 'إذا كنت ترغب في تنفيذ مشروع أو تود فقط إلقاء التحية، لا تتردد في إرسال رسالة عبر البريد الإلكتروني، وسأقوم بالرد عليك في أقرب وقت ممكن.',
+    'your name' => 'اسمك',
+    'your email' => 'بريدك الإلكتروني',
+    'your message' => 'رسالتك',
+    'send message' => 'إرسال',
+    // Dashboard
+    'profile & bio' => 'الملف الشخصي والسيرة الذاتية',
+    'skill & tools' => 'المهارات والأدوات',
+    'account settings' => 'إعدادات الحساب',
+    'view live portfolio' => 'عرض الموقع التجريبي',
+    'dashboard' => 'لوحة التحكم',
+    'logged in as:' => 'تم تسجيل الدخول بواسطة:',
+    // Edit Profile 
+    'name' => 'الاسم بالكامل',
+    'professional headline' => 'الوصف المهني',
+    'bio' => 'السيرة الذاتية',
+    'avatar image' => 'الصورة الشخصية',
+    'save' => 'حفظ التغييرات',
+    'edit profile & bio' => 'تعديل الملف الشخصى',
+    // Edit Projects
+    'manage projects' => 'التحكم فى المشاريع',
+    'add a new project' => 'اضف مشروع جديد',
+    'project title' => 'عنوان المشروع',
+    'description' => 'وصف المشروع',
+    'project image' => 'صورة المشروع',
+    'close' => 'اغلاق',
+    'update project' => 'تعديل مشروع',
+    'delete project' => 'حذف مشروع',
+    'delete confirmation' => 'هل انت متاكد من حذف المشروع',
+    'delete ' => 'حذف',
+    'nothing to show' => 'لا يوجد شئ للعرض',
+    // Edit Skills 
+    // Skills Page
+    'manage skills' => 'التحكم في المهارات',
+    'add a new skill' => 'إضافة مهارة جديدة',
+    'skill name' => 'اسم المهارة',
+    'level' => 'المستوى',
+    'update skill' => 'تعديل المهارة',
+    'delete skill' => 'حذف المهارة',
+    'delete confirmation skill' => 'هل أنت متأكد من حذف المهارة',
+    'manage account preferences' => 'إدارة تفضيلات الحساب',
+
+];

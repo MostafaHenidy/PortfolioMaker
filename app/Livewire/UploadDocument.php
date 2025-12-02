@@ -60,11 +60,14 @@ class UploadDocument extends Component
 
         $fileName = 'qrcode.svg';
         $svgContent = $this->qrCodeSvg;
+        $utf8Content = $svgContent;
 
-        return response()->streamDownload(function () use ($svgContent) {
-            echo $svgContent;
+        return response()->streamDownload(function () use ($utf8Content) {
+            // Echo the guaranteed UTF-8 content
+            echo $utf8Content;
         }, $fileName, [
-            'Content-Type' => 'image/svg+xml',
+            // Keep the explicit UTF-8 header for the browser
+            'Content-Type' => 'image/svg+xml; charset=utf-8',
         ]);
     }
     public function render()
@@ -73,8 +76,13 @@ class UploadDocument extends Component
         if (Auth::user()) {
             $this->uploadedFile = Document::where('user_id', Auth::user()->id)->latest()->first();
             if ($this->uploadedFile) {
-                $this->url = Storage::url($this->uploadedFile->file_path);
-                $qrCode = QrCode::size(100)->generate(request()->url() . $this->url);
+                $baseUrl = request()->url();
+                $filePath = $this->uploadedFile->file_path;
+                $encodedFilePath = rawurlencode($filePath);
+                $this->url = '/storage/' . $encodedFilePath;
+                $fullUrl = $baseUrl . $this->url;
+                $encodedUrl = mb_convert_encoding($fullUrl, 'UTF-8', 'auto');
+                $qrCode = QrCode::size(100)->generate($encodedUrl);
                 $this->qrCodeSvg = (string) $qrCode;
             }
         }
