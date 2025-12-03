@@ -1,0 +1,99 @@
+/* Theme 4 – Minimal resume-style layout */
+:root {
+    --primary-color: #1f2933;
+    --success-color: #16a085;
+    --light-bg: #f9fafb;
+    --gradient-primary: linear-gradient(135deg, #e0f2fe 0%, #f9fafb 100%);
+}
+
+body.theme-4 {
+    background-color: var(--light-bg);
+    color: #111827;
+}
+
+body.theme-4 header {
+    background: #ffffff;
+    box-shadow: 0 1px 0 rgba(148, 163, 184, 0.3);
+}
+
+body.theme-4 nav {
+    max-width: 1100px;
+}
+
+body.theme-4 .logo {
+    font-weight: 700;
+}
+
+/* Sections as soft cards with subtle borders */
+body.theme-4 section {
+    max-width: 1100px;
+    padding-block: 3rem;
+}
+
+body.theme-4 section h2 {
+    border-bottom: none;
+    text-align: left;
+    left: 0;
+    transform: none;
+    margin-bottom: 1.5rem;
+}
+
+body.theme-4 .about-content,
+body.theme-4 .skills-container,
+body.theme-4 .contact-container {
+    background: #ffffff;
+    border-radius: 1.25rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: none;
+}
+
+body.theme-4 .stats {
+    margin-top: 1.5rem;
+}
+
+body.theme-4 .stat-card {
+    background: #f9fafb;
+    border-radius: 1rem;
+}
+
+/* Projects in simple grid cards */
+body.theme-4 .projects-grid {
+    gap: 1.5rem;
+}
+
+body.theme-4 .project-card {
+    background: #ffffff;
+    border-radius: 1.25rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: none;
+}
+
+body.theme-4 .project-image {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Form */
+body.theme-4 .form-control {
+    border-radius: 0.75rem;
+}
+
+body.theme-4 footer {
+    background: #ffffff;
+    color: #4b5563;
+    box-shadow: 0 -1px 0 rgba(148, 163, 184, 0.3);
+}
+
+body.theme-4 .hero h1 {
+    color: var(--primary-color);
+}
+
+body.theme-4 .hero p {
+    color: var(--primary-color);
+}
+body.theme-4 .progress-fill {
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 10px;
+    transition: width 1.5s ease-out;
+    width: 0;
+}

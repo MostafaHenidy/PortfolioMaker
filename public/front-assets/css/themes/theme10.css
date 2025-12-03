@@ -1,0 +1,125 @@
+/* Theme 10 – Minimal dark with slim left nav */
+:root {
+    --primary-color: #0ea5e9;
+    --success-color: #22d3ee;
+    --light-bg: #020617;
+    --gradient-primary: linear-gradient(135deg, #0ea5e9, #22d3ee);
+}
+
+body.theme-10 {
+    background-color: var(--light-bg);
+    color: #e5e7eb;
+}
+
+body.theme-10 .nav-slim {
+    position: fixed;
+    left: 0;
+    width: 220px;
+    padding: 2rem 1.5rem;
+    background: #020617;
+    border-right: 1px solid #1f2937;
+}
+
+body.theme-10 .nav-slim .logo {
+    margin-bottom: 2rem;
+}
+
+body.theme-10 .nav-slim ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+body.theme-10 .nav-slim a {
+    color: #9ca3af;
+}
+
+body.theme-10 .layout-main {
+    margin-left: 240px;
+    padding: 3rem 2rem 2rem;
+    max-width: 1000px;
+}
+
+body.theme-10 .hero {
+    margin-bottom: 2rem;
+}
+
+body.theme-10 .hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+body.theme-10 .hero-avatar img {
+    width: 140px;
+    height: 140px;
+    border-radius: 999px;
+}
+
+body.theme-10 section h2 {
+    color: #e5e7eb;
+    border-bottom-color: #1f2937;
+}
+
+body.theme-10 .skills-columns .skill-line {
+    display: flex;
+    justify-content: space-between;
+    padding-block: 0.35rem;
+    border-bottom: 1px solid #1f2937;
+}
+
+body.theme-10 .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+}
+
+body.theme-10 .project-card {
+    background: #020617;
+    border-radius: 1.25rem;
+    border: 1px solid #1f2937;
+    padding: 1.25rem;
+}
+
+body.theme-10 .contact-form .form-control {
+    background: #020617;
+    border-color: #1f2937;
+    color: #e5e7eb;
+}
+
+body.theme-10 footer {
+    margin-left: 240px;
+    border-top: 1px solid #1f2937;
+}
+
+@media (max-width: 768px) {
+    body.theme-10 .nav-slim {
+        position: static;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #1f2937;
+        flex-direction: row;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    body.theme-10 .nav-slim ul {
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    body.theme-10 .layout-main,
+    body.theme-10 footer {
+        margin-left: 0;
+    }
+
+    body.theme-10 .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}

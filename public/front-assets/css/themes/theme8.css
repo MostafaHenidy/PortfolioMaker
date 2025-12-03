@@ -1,0 +1,109 @@
+/* Theme 8 – Timeline layout */
+:root {
+    --primary-color: #8b5cf6;
+    --success-color: #6366f1;
+    --light-bg: #f5f3ff;
+    --gradient-primary: linear-gradient(135deg, #8b5cf6, #6366f1);
+}
+
+body.theme-8 {
+    background-color: var(--light-bg);
+}
+
+body.theme-8 .hero {
+    padding: 4rem 2rem 2rem;
+}
+
+body.theme-8 .hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+body.theme-8 .hero-avatar img {
+    width: 140px;
+    height: 140px;
+    border-radius: 999px;
+}
+
+body.theme-8 section {
+    max-width: 900px;
+}
+
+body.theme-8 .about-timeline-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 1.75rem;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+body.theme-8 .skills-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+body.theme-8 .chip {
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    background: var(--primary-color);
+    border: 1px solid #e5e7eb;
+    font-size: 0.85rem;
+}
+
+body.theme-8 .timeline {
+    margin-top: 2rem;
+    position: relative;
+}
+
+body.theme-8 .timeline::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: 12px;
+    width: 2px;
+    background: linear-gradient(to bottom, #8b5cf6, #6366f1);
+}
+
+body.theme-8 .timeline-item {
+    position: relative;
+    padding-left: 2.5rem;
+    margin-bottom: 1.75rem;
+}
+
+body.theme-8 .timeline-dot {
+    position: absolute;
+    left: 6px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    background: #8b5cf6;
+}
+
+body.theme-8 .timeline-content {
+    background: white;
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+body.theme-8 .contact-inline .form-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 640px) {
+    body.theme-8 .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    body.theme-8 .contact-inline .form-row {
+        flex-direction: column;
+    }
+}

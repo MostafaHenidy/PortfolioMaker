@@ -1,0 +1,156 @@
+/* Theme 7 – Card deck / tiles layout */
+:root {
+    --primary-color: #22c55e;
+    --success-color: #0ea5e9;
+    --light-bg: #f0fdf4;
+    --gradient-primary: linear-gradient(135deg, #22c55e, #0ea5e9);
+}
+
+body.theme-7 {
+    background-color: var(--light-bg);
+}
+
+body.theme-7 .hero-tiles {
+    padding: 4rem 2rem 2rem;
+}
+
+body.theme-7 .tiles-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+body.theme-7 .tile {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 1.25rem;
+    box-shadow: 0 16px 40px rgba(15, 118, 110, 0.08);
+}
+body.theme-7 .tile span {
+    color: var(--primary-color);
+}
+
+body.theme-7 .tile.main {
+    grid-column: span 2;
+}
+body.theme-7 .tile.main h1 {
+    color: var(--primary-color);
+}
+body.theme-7 .tile.main p {
+    color: var(--primary-color);
+}
+
+body.theme-7 .tile.avatar-tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.theme-7 .tile.avatar-tile img {
+    width: 120px;
+    height: 120px;
+    border-radius: 999px;
+}
+
+body.theme-7 .tile .label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #6b7280;
+}
+
+body.theme-7 .tile .value {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+body.theme-7 section {
+    max-width: 1100px;
+}
+
+body.theme-7 .about-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 1.75rem;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+body.theme-7 .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem;
+}
+
+body.theme-7 .skill-card {
+    background: white;
+    border-radius: 1.25rem;
+    padding: 1.1rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+body.theme-7 .skill-meter {
+    height: 6px;
+    border-radius: 999px;
+    background: #e5e7eb;
+    overflow: hidden;
+    margin-block: 0.5rem;
+}
+
+body.theme-7 .skill-meter span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #22c55e, #0ea5e9);
+}
+
+body.theme-7 .projects-masonry {
+    column-count: 3;
+    column-gap: 1.5rem;
+}
+
+body.theme-7 .project-tile {
+    break-inside: avoid;
+    background: white;
+    border-radius: 1.5rem;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+}
+
+body.theme-7 .contact-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+    gap: 1.75rem;
+}
+
+body.theme-7 .contact-form-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+}
+
+@media (max-width: 992px) {
+    body.theme-7 .tiles-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body.theme-7 .projects-masonry {
+        column-count: 2;
+    }
+
+    body.theme-7 .contact-row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    body.theme-7 .tiles-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    body.theme-7 .projects-masonry {
+        column-count: 1;
+    }
+}

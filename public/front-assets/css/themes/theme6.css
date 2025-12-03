@@ -1,0 +1,130 @@
+/* Theme 6 – Fullscreen hero with horizontal bands */
+:root {
+    --primary-color: #3b82f6;
+    --success-color: #06b6d4;
+    --light-bg: #f1f5f9;
+    --gradient-primary: linear-gradient(135deg, #3b82f6, #06b6d4);
+}
+
+body.theme-6 {
+    background-color: var(--light-bg);
+}
+
+body.theme-6 .hero-full {
+    padding: 5rem 2rem;
+    background: var(--gradient-primary);
+    color: white;
+}
+
+body.theme-6 .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 2.5rem;
+    align-items: center;
+}
+
+body.theme-6 .hero-text h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+body.theme-6 .hero-kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+body.theme-6 .hero-subtitle {
+    font-size: 1.15rem;
+    margin-bottom: 1.5rem;
+}
+
+body.theme-6 .hero-avatar img {
+    width: 200px;
+    height: 200px;
+    border-radius: 999px;
+    border: 4px solid rgba(255, 255, 255, 0.9);
+}
+
+body.theme-6 .band {
+    padding: 3rem 2rem;
+}
+
+body.theme-6 .band-light {
+    background: #f8fafc;
+}
+
+body.theme-6 .band-colored {
+    background: #e0f2fe;
+}
+
+body.theme-6 .band-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+body.theme-6 h2 {
+    text-align: left;
+    border-bottom: none;
+    margin-bottom: 1.5rem;
+}
+
+body.theme-6 .about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 2rem;
+}
+
+body.theme-6 .skills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+body.theme-6 .skill-chip {
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+body.theme-6 .skill-level {
+    font-size: 0.85rem;
+    color: #3b82f6;
+}
+
+body.theme-6 .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+body.theme-6 .project-card {
+    background: white;
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+body.theme-6 .contact-simple {
+    max-width: 540px;
+}
+
+@media (max-width: 768px) {
+    body.theme-6 .hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+        text-align: center;
+    }
+
+    body.theme-6 .about-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+

@@ -1,0 +1,75 @@
+/* Theme 9 – Cover letter style */
+:root {
+    --primary-color: #f97316;
+    --success-color: #ef4444;
+    --light-bg: #fef2f2;
+    --gradient-primary: linear-gradient(135deg, #f97316, #ef4444);
+}
+
+body.theme-9 {
+    background-color: var(--light-bg);
+}
+
+body.theme-9 .hero-letter {
+    padding: 4rem 2rem 2rem;
+}
+
+body.theme-9 .hero-text {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+body.theme-9 .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+body.theme-9 .hero-letter h1 {
+    font-size: 2.5rem;
+    margin-block: 0.75rem;
+}
+
+body.theme-9 .intro {
+    font-size: 1.05rem;
+    color: var(--light-bg);
+}
+
+body.theme-9 section {
+    max-width: 800px;
+}
+
+body.theme-9 .body-text {
+    line-height: 1.8;
+    color: #374151;
+}
+
+body.theme-9 .skills-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+}
+
+body.theme-9 .skills-list li {
+    display: flex;
+    justify-content: space-between;
+    padding-block: 0.35rem;
+    border-bottom: 1px dashed #e5e7eb;
+}
+
+body.theme-9 .projects-list {
+    margin-top: 1rem;
+}
+
+body.theme-9 .project-row {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 1rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+body.theme-9 .contact-form-simple {
+    margin-top: 1rem;
+}

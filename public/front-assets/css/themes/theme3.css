@@ -1,0 +1,175 @@
+/* Theme 3 – Modern dark, card-based layout */
+:root {
+    --primary-color: #4dabf7;
+    --success-color: #51cf66;
+    --light-bg: #050816;
+    --gradient-primary: linear-gradient(
+        135deg,
+        #1a2a6c 0%,
+        #b21f1f 50%,
+        #fdbb2d 100%
+    );
+}
+
+body.theme-3 {
+    background: radial-gradient(circle at top, #1f2937 0, #050816 55%);
+    color: #e9ecef;
+}
+
+body.theme-3 header {
+    background: transparent;
+    box-shadow: none;
+}
+
+body.theme-3 nav {
+    max-width: 1200px;
+}
+
+body.theme-3 .logo {
+    color: #f8fafc;
+}
+
+body.theme-3 nav a {
+    color: #cbd5f5;
+}
+
+body.theme-3 nav a:hover {
+    color: #ffffff;
+}
+
+/* Hero as centered spotlight card */
+body.theme-3 .hero {
+    background: transparent;
+    padding-top: 5rem;
+}
+
+body.theme-3 .hero-content {
+    background: radial-gradient(
+        circle at top left,
+        rgba(76, 110, 245, 0.35),
+        rgba(15, 23, 42, 0.95)
+    );
+    border-radius: 2rem;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+body.theme-3 .hero img {
+    border-color: rgba(248, 250, 252, 0.9);
+}
+
+body.theme-3 .hero h1 {
+    color: #f9fafb;
+}
+
+body.theme-3 .hero p {
+    color: #e5e7eb;
+}
+
+body.theme-3 .btn-primary {
+    background: linear-gradient(135deg, #4dabf7, #9775fa);
+}
+
+body.theme-3 .btn-primary:hover {
+    background: linear-gradient(135deg, #3b82f6, #7c3aed);
+}
+
+/* Sections as floating cards */
+body.theme-3 section {
+    position: relative;
+}
+
+body.theme-3 section h2 {
+    border-bottom-color: rgba(148, 163, 184, 0.6);
+    color: #e5e7eb;
+}
+
+body.theme-3 .about-content,
+body.theme-3 .skills-container,
+body.theme-3 .projects-grid,
+body.theme-3 .contact-container {
+    background: rgba(15, 23, 42, 0.95);
+    border-radius: 1.5rem;
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
+}
+
+body.theme-3 .stats {
+    gap: 1.75rem;
+}
+
+body.theme-3 .stat-card {
+    background: radial-gradient(
+        circle at top,
+        rgba(59, 130, 246, 0.22),
+        rgba(15, 23, 42, 1)
+    );
+    border-color: rgba(148, 163, 184, 0.4);
+}
+
+body.theme-3 .stat-number {
+    color: #4dabf7;
+}
+
+body.theme-3 .stat-label {
+    color: #cbd5f5;
+}
+
+/* Skills */
+body.theme-3 .skill-item {
+    background: rgba(15, 23, 42, 0.9);
+}
+
+body.theme-3 .skill-name {
+    color: #e5e7eb;
+}
+
+body.theme-3 .skill-percentage {
+    color: #51cf66;
+}
+
+body.theme-3 .progress-bar {
+    background: rgba(31, 41, 55, 0.9);
+}
+
+body.theme-3 .progress-fill {
+    background: linear-gradient(90deg, #4dabf7, #51cf66);
+}
+
+/* Projects */
+body.theme-3 .project-card {
+    background: rgba(15, 23, 42, 0.95);
+}
+
+body.theme-3 .project-title {
+    color: #93c5fd;
+}
+
+body.theme-3 .project-desc {
+    color: #e5e7eb;
+}
+
+body.theme-3 .tag {
+    background: rgba(147, 197, 253, 0.18);
+    color: #bfdbfe;
+}
+
+/* Contact */
+body.theme-3 .contact-container p {
+    color: #cbd5f5;
+}
+
+body.theme-3 .form-control {
+    background: rgba(15, 23, 42, 0.9);
+    border-color: rgba(148, 163, 184, 0.4);
+    color: #e5e7eb;
+}
+
+body.theme-3 .form-control::placeholder {
+    color: #9ca3af;
+}
+
+/* Footer */
+body.theme-3 footer {
+    background: transparent;
+    border-top: 1px solid rgba(148, 163, 184, 0.4);
+}

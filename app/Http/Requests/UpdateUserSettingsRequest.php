@@ -26,6 +26,7 @@ class UpdateUserSettingsRequest extends FormRequest
             'skills'   => 'required|boolean',
             'projects' => 'required|boolean',
             'contact'  => 'required|boolean',
+            'theme_id' => 'required|integer|between:1,10',
         ];
     }
     /**
@@ -47,6 +48,10 @@ class UpdateUserSettingsRequest extends FormRequest
 
             'contact.required' => 'The "Contact" section visibility status is mandatory and must be set.',
             'contact.boolean' => 'The "Contact" section status must be designated as a boolean value (True or False).',
+
+            'theme_id.required' => 'The portfolio theme is required.',
+            'theme_id.integer'  => 'The portfolio theme must be a valid number.',
+            'theme_id.between'  => 'The portfolio theme must be between 1 and 10.',
         ];
     }
 }

@@ -91,7 +91,46 @@ class UserController extends Controller
             $skills = Skill::where('user_id', $user->id)->get();
             $projects = Project::where('user_id', $user->id)->get();
             $settings = Settings::where('user_id', $user->id)->firstOrFail();
+
+            // Determine portfolio theme ID (1–10)
+            $themeId = $settings->theme_id ?? 1;
+
+            // Choose view based on theme
+            switch ($themeId) {
+                case 2:
+                    $viewName = 'portfolio.theme2';
+                    break;
+                case 3:
+                    $viewName = 'portfolio.theme3';
+                    break;
+                case 4:
+                    $viewName = 'portfolio.theme4';
+                    break;
+                case 5:
+                    $viewName = 'portfolio.theme5';
+                    break;
+                case 6:
+                    $viewName = 'portfolio.theme6';
+                    break;
+                case 7:
+                    $viewName = 'portfolio.theme7';
+                    break;
+                case 8:
+                    $viewName = 'portfolio.theme8';
+                    break;
+                case 9:
+                    $viewName = 'portfolio.theme9';
+                    break;
+                case 10:
+                    $viewName = 'portfolio.theme10';
+                    break;
+                case 1:
+                default:
+                    $viewName = 'portfolio.theme1';
+                    break;
+            }
         }
-        return view('userPortfolio', get_defined_vars());
+
+        return view($viewName, get_defined_vars());
     }
 }
