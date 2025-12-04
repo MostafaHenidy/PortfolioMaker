@@ -22,7 +22,7 @@ class UpdateUserInfoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|regex:/^[\pL\s\-\.]{2,255}$/u',
+            'name' => 'required|string|max:255|regex:/^[\pL\s\-\.\']{2,255}$/u',
             'professional_headline' => 'nullable|string|max:255',
             'bio' => 'nullable|string|max:1000',
             'experience' => 'nullable|numeric|min:1|max:50',
@@ -38,8 +38,7 @@ class UpdateUserInfoRequest extends FormRequest
     {
         return [
             'name.required' => 'The Name field is mandatory and must be provided.',
-            'name.regex' => 'The Full Name field must consist of letters, spaces, hyphens, or periods and cannot be purely numeric or contain special symbols.',
-
+            'name.regex' => 'The Full Name field must consist only',
             'professional_headline.string' => 'The Professional Headline must be a valid text string.',
 
             'bio.max' => 'The biography exceeds the maximum allowed character limit.',

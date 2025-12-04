@@ -24,6 +24,9 @@ return [
     'view live portfolio' => 'عرض الموقع التجريبي',
     'dashboard' => 'لوحة التحكم',
     'logged in as:' => 'تم تسجيل الدخول بواسطة:',
+    'Jane Doe' => 'محمد أحمد',
+    'engineer' => 'مهندس',
+    'bioPlaceholder' => 'اكتب نبذة عنك هنا...',
     // Edit Profile 
     'name' => 'الاسم بالكامل',
     'professional headline' => 'الوصف المهني',
@@ -38,11 +41,14 @@ return [
     'description' => 'وصف المشروع',
     'project image' => 'صورة المشروع',
     'close' => 'اغلاق',
+    'create project' => 'إنشئ مشروع',
     'update project' => 'تعديل مشروع',
     'delete project' => 'حذف مشروع',
     'delete confirmation' => 'هل انت متاكد من حذف المشروع',
-    'delete ' => 'حذف',
+    'delete' => 'حذف',
     'nothing to show' => 'لا يوجد شئ للعرض',
+    'projectName' => 'ادخل أسم المشروع',
+    'projectDescription' => 'اكتب وصفاً موجزاً للمشروع هنا...',
     // Edit Skills 
     // Skills Page
     'manage skills' => 'التحكم في المهارات',
@@ -53,5 +59,13 @@ return [
     'delete skill' => 'حذف المهارة',
     'delete confirmation skill' => 'هل أنت متأكد من حذف المهارة',
     'manage account preferences' => 'إدارة تفضيلات الحساب',
-
+    'copy' => 'انسخ المهارة',
+    'created by' => 'تم إنشائها بواسطة:',
+    'search skills' => 'ابحث عن مهارة',
+    'all skills' => 'كل المهارات',
+    'your skills' => 'مهاراتك',
+    'skillName' => 'اسم المهارة',
+    'skillLevel' => '80%',
+    // Settings Page 
+    'theme' => 'الواجهة',
 ];

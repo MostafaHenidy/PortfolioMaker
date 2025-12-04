@@ -13,8 +13,8 @@ function checkSkill($project, $skill)
 function getAvatar($user)
 {
 
-    if ($user && $user->getFirstMediaUrl('avatars')) {
-        return $user->getFirstMediaUrl('avatars');
+    if ($user && $user->getLastMediaUrl('avatars')) {
+        return $user->getLastMediaUrl('avatars');
     }
 
     // Fallback: generate default avatar as base64
@@ -22,7 +22,7 @@ function getAvatar($user)
 }
 function getProjectImage($project)
 {
-    if ($project && $project->getFirstMediaUrl('projectImage')) {
-        return $project->getFirstMediaUrl('projectImage');
+    if ($project && $project->getLastMediaUrl('projectImages')) {
+        return $project->getLastMediaUrl('projectImages');
     }
 }

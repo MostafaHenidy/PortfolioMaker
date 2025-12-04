@@ -19,7 +19,11 @@ Route::group([
     Route::controller(UserController::class)->group(function () {
         // Dashboard
         //User Info 
-        Route::get('/dashboard', 'dashboard');
+        Route::get('/dashboard', 'profile');
+        Route::get('/dashboard/projects', 'projects')->name('projects');
+        Route::get('/dashboard/skills', 'skills')->name('skills');
+        Route::get('/dashboard/settings', 'settings')->name('settings');
+
         Route::patch('/dashboard/update', 'updateUserInfo')->name('update');
         Route::patch('/dashboard/settings/update', 'updateUserSettings')->name('settings.update');
         //Portfolio
@@ -32,12 +36,13 @@ Route::group([
         Route::post('/dashboard/skills/store', 'storeSkills')->name('skills.store');
         Route::patch('/dashboard/skills/{id}/update', 'updateSkill')->name('skills.update');
         Route::delete('/dashboard/skills/{id}/delete', 'deleteSkill')->name('skills.delete');
+        Route::post('/dashboard/skills/{id}/copy', 'copySkill')->name('skill.copy');
     });
     Route::controller(ProjectsController::class)->group(function () {
         //User Projects
         Route::post('/dashboard/projects/store', 'storeProjects')->name('projects.store');
         Route::patch('/dashboard/project/{id}/update', 'updateProject')->name('project.update');
-        Route::delete('/dashboard/project/{id}/delete', 'deleteProject')->name('project.delete');
+        Route::delete('/dashboard/project/{id}/{user_id}/delete', 'deleteProject')->name('project.delete');
     });
 });
 

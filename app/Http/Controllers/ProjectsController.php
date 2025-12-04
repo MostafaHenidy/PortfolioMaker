@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProjectsController extends Controller
@@ -22,9 +24,14 @@ class ProjectsController extends Controller
                 $project->skills()->sync($skillsIds);
             }
             if ($request->hasFile('projectImage')) {
-                $project->clearMediaCollection('projectImage');
-                $project->addMediaFromRequest('projectImage')->toMediaCollection('projectImage');
+                $project->clearMediaCollection('projectImages');
+                $project->addMediaFromRequest('projectImage')->toMediaCollection('projectImages');
             }
+            $user = User::findOrFail($request->user_id);
+            $projects = Project::where('user_id', $user->id)->get();
+            $user->update([
+                'projects_made' => count($projects),
+            ]);
             DB::commit();
             return redirect()->back()->with('success', 'Project create successfully');
         } catch (Exception $e) {
@@ -44,8 +51,8 @@ class ProjectsController extends Controller
             $project->skills()->sync($skillsIds);
 
             if ($request->hasFile('projectImage')) {
-                $project->clearMediaCollection('projectImage');
-                $project->addMediaFromRequest('projectImage')->toMediaCollection('projectImage');
+                $project->clearMediaCollection('projectImages');
+                $project->addMediaFromRequest('projectImage')->toMediaCollection('projectImages');
             }
             DB::commit();
             return redirect()->back()->with('success', 'Project updated successfully');
@@ -55,13 +62,18 @@ class ProjectsController extends Controller
         }
     }
 
-    public function deleteProject($id)
+    public function deleteProject($id, $user_id)
     {
         DB::beginTransaction();
         try {
             $project = Project::findOrFail($id);
             if ($project) {
                 $project->delete();
+                $user = User::findOrFail($user_id);
+                $projects = Project::where('user_id', $user->id)->get();
+                $user->update([
+                    'projects_made' => count($projects),
+                ]);
                 DB::commit();
                 return redirect()->back()->with('success', 'Project Deleted successfully');
             }

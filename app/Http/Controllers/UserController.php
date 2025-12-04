@@ -18,18 +18,45 @@ use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
-    public function dashboard()
+    // Dashboard
+    public function profile()
     {
-        $skills = Skill::where('user_id', Auth::user()->id)->get();
-        $projects = Project::where('user_id', Auth::user()->id)->get();
-        $settings = Settings::where('user_id', Auth::user()->id)->first();
-        return view('dashboard.dashboard', get_defined_vars());
+        $user = Auth::user();
+        return view('dashboard.profile', get_defined_vars());
     }
+    public function projects()
+    {
+        $user = Auth::user();
+        $projects = Project::where('user_id', $user->id)->get();
+        $skills = Skill::where('user_id', $user->id)->get();
+        return view('dashboard.projects', get_defined_vars());
+    }
+    public function skills()
+    {
+        $user = Auth::user();
+        // Skills attached to the authenticated user via many-to-many pivot
+        $userSkills = $user->skills()->orderBy('name')->get();
+
+        // All available skills in the system (for browsing/copying)
+        $allSkills = Skill::orderBy('name')->get();
+        return view('dashboard.skills', get_defined_vars());
+    }
+    public function settings()
+    {
+        $user = Auth::user();
+        $settings = Settings::where('user_id', $user->id)->first();
+        return view('dashboard.settings', get_defined_vars());
+    }
+
+
+
+
     // User Info
     public function updateUserInfo(UpdateUserInfoRequest $request)
     {
         DB::beginTransaction();
         try {
+            $user = Auth::user();
             Auth::user()->update($request->validated());
             if ($request->hasFile('avatar')) {
                 $user->clearMediaCollection('avatars');

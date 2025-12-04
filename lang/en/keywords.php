@@ -24,6 +24,9 @@ return [
     'view live portfolio' => 'View Live Portfolio',
     'dashboard' => 'Dashboard',
     'logged in as:' => 'Logged in as:',
+    'Jane Doe' => 'Jane Doe',
+    'engineer' => 'Engineer',
+    'bioPlaceholder' => 'Tell us about yourself...',
     // Edit Profile 
     'name' => 'Full Name',
     'professional headline' => 'Professional Headline',
@@ -38,11 +41,15 @@ return [
     'description' => 'Description',
     'project image' => 'Project Image',
     'close' => 'Close',
+    'create project' => 'Create project',
     'update project' => 'Update Project',
     'delete project' => 'Delete Project',
     'delete confirmation' => 'Are you sure you want to delete the project',
-    'delete ' => 'Delete',
+    'delete' => 'Delete',
     'nothing to show' => 'Nothing to show',
+    'projectName' => 'Enter project name',
+    'projectDescription' => 'Enter a comprehensive overview of your project...',
+
     // Edit Skills 
     // Skills Page
     'manage skills' => 'Manage Skills',
@@ -53,5 +60,13 @@ return [
     'delete skill' => 'Delete Skill',
     'delete confirmation skill' => 'Are you sure you want to delete the skill',
     'manage account preferences' => 'Manage Account Preferences',
-
+    'copy' => 'Copy',
+    'created by' => 'Created by:',
+    'search skills' => 'Search skill',
+    'all skills' => 'All skills',
+    'your skills' => 'Your skills',
+    'skillName' => 'Skill Name',
+    'skillLevel' => '80%',
+    // Settings Page 
+    'theme' => 'Theme',
 ];
