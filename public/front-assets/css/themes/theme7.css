@@ -62,8 +62,10 @@ body.theme-7 .tile .label {
 }
 
 body.theme-7 .tile .value {
-    font-size: 1.15rem;
+    font-size: 5rem;
     font-weight: 600;
+    display: block;
+    margin-top: 10px;
 }
 
 body.theme-7 section {

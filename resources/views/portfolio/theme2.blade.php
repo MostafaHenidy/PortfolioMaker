@@ -8,19 +8,43 @@
     <link rel="stylesheet" href="{{ asset('front-assets/css/themes/theme1.css') }}">
     <link rel="stylesheet" href="{{ asset('front-assets/css/themes/theme2.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="icon" href="{{ asset('front-assets/icon.svg') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
-<body class="theme-2">
+<body class="{{ LaravelLocalization::getCurrentLocale() == 'ar' ? 'rtl' : '' }} theme-2">
     <!-- Header -->
     <header>
         <nav>
             <ul class="nav flex-column">
                 <div class="logo">{{ $user->name }}</div>
-                <li class="nav-item"><a href="#about">About</a></li>
-                <li class="nav-item"><a href="#skills">Skills</a></li>
-                <li class="nav-item"><a href="#projects">Projects</a></li>
-                <li class="nav-item"><a href="#contact">Contact</a></li>
+                <li class="nav-item"><a href="#about"><i
+                            class="bi bi-file-person-fill"></i><span>{{ __('keywords.about') }}</span></a></li>
+                <li class="nav-item"><a href="#skills"><i
+                            class="bi bi-person-gear"></i><span>{{ __('keywords.skills') }}</span></a>
+                </li>
+                <li class="nav-item"><a href="#projects"><i
+                            class="bi bi-clipboard2-check-fill"></i><span>{{ __('keywords.projects') }}</span></a></li>
+                <li class="nav-item"><a href="#contact"><i
+                            class="bi bi-chat-left-text-fill"></i><span>{{ __('keywords.contact') }}</span></a></li>
+                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                    @if (LaravelLocalization::getCurrentLocale() !== $localeCode)
+                        <li class="nav-item">
+                            <a rel="alternate" hreflang="{{ $localeCode }}"
+                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                <i class="bi bi-globe"></i>
+                                <span>{{ $properties['native'] }}</span>
+                            </a>
+                        </li>
+                    @endif
+                @endforeach
             </ul>
         </nav>
     </header>
@@ -29,27 +53,27 @@
     <section class="hero">
         <div class="hero-content">
             <img src="{{ getAvatar($user) }}" alt="{{ $user->name }}">
-            <h1>Hello, I'm <span>{{ $user->name }}</span></h1>
-            <p>A passionate <strong>{{ $user->professional_headline }}</strong> .</p>
-            <a href="#projects" class="btn-primary">View My Work</a>
+            <h1>{{ __('keywords.selfIntroduction') }} <span class="fw-bold">{{ $user->name }}</span></h1>
+            <p>{{ __('keywords.passionate') }} <strong>{{ $user->professional_headline }}</strong> .</p>
+            <a href="#projects" class="btn-primary">{{ __('keywords.view my work') }}</a>
         </div>
     </section>
 
     <!-- About Section -->
     @if ($settings->about)
         <section id="about">
-            <h2>About Me</h2>
+            <h2>{{ __('keywords.about') }}</h2>
             <div class="about-content">
                 <p>{{ $user->bio }}.</p>
             </div>
             <div class="stats">
                 <div class="stat-card">
                     <div class="stat-number">{{ $user->experience }}+</div>
-                    <div class="stat-label">Years of Experience</div>
+                    <div class="stat-label">{{ __('keywords.years of experience') }}</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">{{ $user->projects_made }}</div>
-                    <div class="stat-label">Completed Projects</div>
+                    <div class="stat-label">{{ __('keywords.completed projects') }}</div>
                 </div>
             </div>
         </section>
@@ -58,7 +82,7 @@
     @if ($settings->skills)
         <!-- Skills Section -->
         <section id="skills">
-            <h2>Skills & Expertise</h2>
+            <h2>{{ __('keywords.skills') }}</h2>
             <div class="skills-container">
                 @foreach ($skills as $skill)
                     <div class="skill-item">
@@ -78,7 +102,7 @@
     @if ($settings->projects)
         <!-- Projects Section -->
         <section id="projects">
-            <h2>Featured Projects</h2>
+            <h2>{{ __('keywords.featured projects') }}</h2>
             <div class="projects-grid">
                 @foreach ($projects as $project)
                     <div class="project-card">
@@ -101,24 +125,25 @@
     @if ($settings->contact)
         <!-- Contact Section -->
         <section id="contact">
-            <h2>Get In Touch</h2>
+            <h2>{{ __('keywords.get in touch') }}</h2>
             <div class="contact-container">
-                <p>Have a project in mind or just want to say hello? Send me an email and I'll get back to you as soon
-                    as
-                    possible.</p>
+                <p>{{ __('keywords.project description') }}</p>
                 <form action="{{ route('dashboard.contact.sendMessage', ['userName' => $user->name]) }}"
                     method="POST">
                     @csrf
                     <div class="form-group">
-                        <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                        <input type="text" class="form-control" name="name"
+                            placeholder="{{ __('keywords.your name') }}" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                        <input type="email" class="form-control" name="email"
+                            placeholder="{{ __('keywords.your email') }}" required>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" name="message" placeholder="Your Message" required></textarea>
+                        <textarea class="form-control" name="message" placeholder="{{ __('keywords.your message') }}" required></textarea>
                     </div>
-                    <button type="submit" class="btn-primary" style="width: 100%;">Send Message</button>
+                    <button type="submit" class="btn-primary"
+                        style="width: 100%;">{{ __('keywords.send message') }}</button>
                 </form>
             </div>
         </section>
@@ -131,5 +156,3 @@
 </body>
 
 </html>
-
-

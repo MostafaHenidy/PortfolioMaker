@@ -17,6 +17,7 @@ return [
     'your email' => 'Your Email',
     'your message' => 'Your Message',
     'send message' => 'Send',
+    'portfolio' => 'Portfolio',
     // Dashboard
     'profile & bio' => 'Profile & Bio',
     'skill & tools' => 'Skills & Tools',

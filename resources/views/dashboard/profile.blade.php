@@ -4,8 +4,7 @@
     <div id="profile-tab" class="tab-content active" @if (LaravelLocalization::getCurrentLocale() == 'ar') dir="rtl" @endif>
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3 class="mb-0">{{ __('keywords.edit profile & bio') }}</h3>
-            <img class="rounded-circle" + style="width: 56px; height: 56px; object-fit: cover;"
-                src="{{ getAvatar(auth()->user()) }}" + alt="{{ auth()->user()->name }}">
+            <img class="rounded-circle avatar" src="{{ getAvatar(auth()->user()) }}" + alt="{{ auth()->user()->name }}">
         </div>
         <form class="form-group pb-3" method="POST" action="{{ route('dashboard.update') }}" enctype="multipart/form-data">
             @csrf

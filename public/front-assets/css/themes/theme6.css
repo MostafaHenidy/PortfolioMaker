@@ -92,8 +92,17 @@ body.theme-6 .skill-chip {
     display: inline-flex;
     gap: 0.5rem;
     align-items: center;
+    justify-content: space-between;
+    min-width: 140px;
 }
-
+body.theme-6 .skill-chip .skill-name {
+    font-weight: 500;
+}
+body.theme-6 .skill-chip .skill-level {
+    font-size: 0.85rem;
+    color: #3b82f6;
+    font-weight: 600;
+}
 body.theme-6 .skill-level {
     font-size: 0.85rem;
     color: #3b82f6;
@@ -126,5 +135,3 @@ body.theme-6 .contact-simple {
         grid-template-columns: minmax(0, 1fr);
     }
 }
-
-

@@ -55,7 +55,13 @@ body.rtl .sidebar {
     flex-direction: column;
     gap: 0.5rem;
 }
-
+.avatar {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border: 3px solid #5ee360;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 .nav-item {
     display: flex;
     align-items: center;

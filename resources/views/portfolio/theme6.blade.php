@@ -15,10 +15,20 @@
         <nav>
             <div class="logo">{{ $user->name }}</div>
             <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">{{ __('keywords.about') }}</a></li>
+                <li><a href="#skills">{{ __('keywords.skills') }}</a></li>
+                <li><a href="#projects">{{ __('keywords.projects') }}</a></li>
+                <li><a href="#contact">{{ __('keywords.contact') }}</a></li>
+                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                    @if (LaravelLocalization::getCurrentLocale() !== $localeCode)
+                        <li>
+                            <a rel="alternate" hreflang="{{ $localeCode }}"
+                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                {{ $properties['native'] }}
+                            </a>
+                        </li>
+                    @endif
+                @endforeach
             </ul>
         </nav>
     </header>
@@ -27,10 +37,10 @@
     <section class="hero hero-full">
         <div class="hero-inner">
             <div class="hero-text">
-                <p class="hero-kicker">Portfolio</p>
-                <h1>{{ $user->name }}</h1>
-                <p class="hero-subtitle">{{ $user->professional_headline }}</p>
-                <a href="#projects" class="btn-primary">View Projects</a>
+                <p class="hero-kicker">{{ __('keywords.portfolio') }}</p>
+                <h1>{{ __('keywords.selfIntroduction') }} {{ $user->name }}</h1>
+                <p class="hero-subtitle">{{ __('keywords.passionate') }} {{ $user->professional_headline }}</p>
+                <a href="#projects" class="btn-primary">{{ __('keywords.view my work') }}</a>
             </div>
             <div class="hero-avatar">
                 <img src="{{ getAvatar($user) }}" alt="{{ $user->name }}">
@@ -42,7 +52,7 @@
     @if ($settings->about)
         <section id="about" class="band band-light">
             <div class="band-inner">
-                <h2>About Me</h2>
+                <h2>{{ __('keywords.about') }}</h2>
                 <div class="about-grid">
                     <div class="about-text">
                         <p>{{ $user->bio }}.</p>
@@ -50,11 +60,11 @@
                     <div class="stats">
                         <div class="stat-card">
                             <div class="stat-number">{{ $user->experience }}+</div>
-                            <div class="stat-label">Years of Experience</div>
+                            <div class="stat-label">{{ __('keywords.years of experience') }}</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-number">{{ $user->projects_made }}</div>
-                            <div class="stat-label">Completed Projects</div>
+                            <div class="stat-label">{{ __('keywords.completed projects') }}</div>
                         </div>
                     </div>
                 </div>
@@ -66,7 +76,7 @@
         <!-- Skills Section -->
         <section id="skills" class="band band-colored">
             <div class="band-inner">
-                <h2>Skills</h2>
+                <h2>{{ __('keywords.skills') }}</h2>
                 <div class="skills-row">
                     @foreach ($skills as $skill)
                         <div class="skill-chip">
@@ -83,10 +93,12 @@
         <!-- Projects Section -->
         <section id="projects" class="band band-light">
             <div class="band-inner">
-                <h2>Projects</h2>
+                <h2>{{ __('keywords.featured projects') }}</h2>
                 <div class="projects-grid">
                     @foreach ($projects as $project)
                         <article class="project-card">
+                            <img style="border-radius: 10px" class="project-image"
+                                src="{{ getProjectImage($project) }}" alt="{{ $project->name }}">
                             <div class="project-header">
                                 <h3 class="project-title">{{ $project->title }}</h3>
                             </div>
@@ -107,22 +119,24 @@
         <!-- Contact Section -->
         <section id="contact" class="band band-colored">
             <div class="band-inner">
-                <h2>Contact</h2>
+                <h2>{{ __('keywords.get in touch') }}</h2>
                 <div class="contact-simple">
-                    <p>Have a project in mind or just want to say hello? Send me a message and I'll get back to you.</p>
+                    <p>{{ __('keywords.project description') }}</p>
                     <form action="{{ route('dashboard.contact.sendMessage', ['userName' => $user->name]) }}"
                         method="POST">
                         @csrf
                         <div class="form-group">
-                            <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                            <input type="text" class="form-control" name="name"
+                                placeholder="{{ __('keywords.your name') }}" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                            <input type="email" class="form-control" name="email"
+                                placeholder="{{ __('keywords.your email') }}" required>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" name="message" placeholder="Your Message" required></textarea>
+                            <textarea class="form-control" name="message" placeholder="{{ __('keywords.your message') }}" required></textarea>
                         </div>
-                        <button type="submit" class="btn-primary">Send Message</button>
+                        <button type="submit" class="btn-primary">{{ __('keywords.send message') }}</button>
                     </form>
                 </div>
             </div>
@@ -135,5 +149,3 @@
 </body>
 
 </html>
-
-

@@ -17,6 +17,7 @@ return [
     'your email' => 'بريدك الإلكتروني',
     'your message' => 'رسالتك',
     'send message' => 'إرسال',
+    'portfolio' => 'ملف الاعمال',
     // Dashboard
     'profile & bio' => 'الملف الشخصي والسيرة الذاتية',
     'skill & tools' => 'المهارات والأدوات',

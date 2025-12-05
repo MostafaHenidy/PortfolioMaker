@@ -15,10 +15,20 @@
         <nav>
             <div class="logo">{{ $user->name }}</div>
             <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">{{ __('keywords.about') }}</a></li>
+                <li><a href="#skills">{{ __('keywords.skills') }}</a></li>
+                <li><a href="#projects">{{ __('keywords.projects') }}</a></li>
+                <li><a href="#contact">{{ __('keywords.contact') }}</a></li>
+                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                    @if (LaravelLocalization::getCurrentLocale() !== $localeCode)
+                        <li>
+                            <a rel="alternate" hreflang="{{ $localeCode }}"
+                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                {{ $properties['native'] }}
+                            </a>
+                        </li>
+                    @endif
+                @endforeach
             </ul>
         </nav>
     </header>
@@ -27,15 +37,15 @@
     <section class="hero hero-tiles">
         <div class="tiles-grid">
             <div class="tile main">
-                <h1>{{ $user->name }}</h1>
-                <p>{{ $user->professional_headline }}</p>
+                <h1>{{ __('keywords.selfIntroduction') }} {{ $user->name }}</h1>
+                <p>{{ __('keywords.passionate') }} {{ $user->professional_headline }}</p>
             </div>
             <div class="tile">
-                <span class="label">Experience</span>
-                <span class="value">{{ $user->experience }}+ yrs</span>
+                <span class="label">{{ __('keywords.years of experience') }}</span>
+                <span class="value">{{ $user->experience }}+</span>
             </div>
             <div class="tile">
-                <span class="label">Projects</span>
+                <span class="label">{{ __('keywords.completed projects') }}</span>
                 <span class="value">{{ $user->projects_made }}</span>
             </div>
             <div class="tile avatar-tile">
@@ -46,7 +56,7 @@
 
     @if ($settings->about)
         <section id="about">
-            <h2>About</h2>
+            <h2>{{ __('keywords.about') }}</h2>
             <div class="about-card">
                 <p>{{ $user->bio }}.</p>
             </div>
@@ -55,7 +65,7 @@
 
     @if ($settings->skills)
         <section id="skills">
-            <h2>Skills</h2>
+            <h2>{{ __('keywords.skills') }}</h2>
             <div class="skills-grid">
                 @foreach ($skills as $skill)
                     <div class="skill-card">
@@ -72,10 +82,12 @@
 
     @if ($settings->projects)
         <section id="projects">
-            <h2>Projects</h2>
+            <h2>{{ __('keywords.featured projects') }}</h2>
             <div class="projects-masonry">
                 @foreach ($projects as $project)
                     <article class="project-tile">
+                        <img style="border-radius: 10px;" class="project-image" src="{{ getProjectImage($project) }}"
+                            alt="{{ $project->name }}">
                         <h3>{{ $project->title }}</h3>
                         <p>{{ $project->description }}.</p>
                         <div class="project-tags">
@@ -91,25 +103,27 @@
 
     @if ($settings->contact)
         <section id="contact">
-            <h2>Contact</h2>
+            <h2>{{ __('keywords.get in touch') }}</h2>
             <div class="contact-row">
                 <div class="contact-text">
-                    <p>Let’s collaborate on your next idea. Drop me a message and I’ll respond as soon as I can.</p>
+                    <p>{{ __('keywords.project description') }}</p>
                 </div>
                 <div class="contact-form-card">
                     <form action="{{ route('dashboard.contact.sendMessage', ['userName' => $user->name]) }}"
                         method="POST">
                         @csrf
                         <div class="form-group">
-                            <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                            <input type="text" class="form-control" name="name"
+                                placeholder="{{ __('keywords.your name') }}" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                            <input type="email" class="form-control" name="email"
+                                placeholder="{{ __('keywords.your email') }}" required>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" name="message" placeholder="Your Message" required></textarea>
+                            <textarea class="form-control" name="message" placeholder="{{ __('keywords.your message') }}" required></textarea>
                         </div>
-                        <button type="submit" class="btn-primary">Send</button>
+                        <button type="submit" class="btn-primary">{{ __('keywords.send message') }}</button>
                     </form>
                 </div>
             </div>
@@ -122,5 +136,3 @@
 </body>
 
 </html>
-
-

@@ -13,11 +13,11 @@ body.theme-10 {
 
 body.theme-10 .nav-slim {
     position: fixed;
-    left: 0;
+    inset-inline-start: 0;
     width: 220px;
     padding: 2rem 1.5rem;
     background: #020617;
-    border-right: 1px solid #1f2937;
+    border-inline-end: 1px solid #1f2937;
 }
 
 body.theme-10 .nav-slim .logo {
@@ -30,17 +30,66 @@ body.theme-10 .nav-slim ul {
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
+    width: 100%;
 }
 
 body.theme-10 .nav-slim a {
     color: #9ca3af;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    width: 100%;
+}
+
+body.theme-10 .nav-slim a:hover {
+    color: #0ea5e9;
+    background: rgba(14, 165, 233, 0.1);
+    transform: translateX(4px);
+}
+
+body.rtl.theme-10 .nav-slim a:hover {
+    transform: translateX(-4px);
+}
+
+body.theme-10 .nav-slim a i {
+    font-size: 1.1rem;
+    width: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    margin-inline-end: 0.75rem;
+}
+
+body.theme-10 .nav-slim a span {
+    flex: 1;
+}
+
+body.theme-10 .nav-slim a:hover i {
+    transform: scale(1.1);
+    color: #0ea5e9;
 }
 
 body.theme-10 .layout-main {
-    margin-left: 240px;
+    margin-inline-start: 240px;
     padding: 3rem 2rem 2rem;
     max-width: 1000px;
+    transition: margin-inline-start 0.3s ease, margin-inline-end 0.3s ease;
+}
+
+@media (min-width: 769px) {
+    body.theme-10 .layout-main {
+        margin-inline-start: 240px;
+    }
+
+    body.rtl.theme-10 .layout-main {
+        margin-inline-start: 0;
+        margin-inline-end: 240px;
+    }
 }
 
 body.theme-10 .hero {
@@ -52,12 +101,34 @@ body.theme-10 .hero-content {
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
+    padding: 2rem;
+    background: rgba(14, 165, 233, 0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(31, 41, 55, 0.5);
+}
+
+body.theme-10 .hero-text h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #e5e7eb;
+}
+
+body.theme-10 .hero-text p {
+    color: #9ca3af;
+    font-size: 1.1rem;
 }
 
 body.theme-10 .hero-avatar img {
     width: 140px;
     height: 140px;
     border-radius: 999px;
+    border: 3px solid rgba(14, 165, 233, 0.3);
+    box-shadow: 0 4px 20px rgba(14, 165, 233, 0.2);
+    transition: transform 0.3s ease;
+}
+
+body.theme-10 .hero-avatar img:hover {
+    transform: scale(1.05);
 }
 
 body.theme-10 section h2 {
@@ -92,34 +163,109 @@ body.theme-10 .contact-form .form-control {
 }
 
 body.theme-10 footer {
-    margin-left: 240px;
+    margin-inline-start: 240px;
     border-top: 1px solid #1f2937;
+}
+
+/* RTL Support for Theme 10 */
+body.rtl.theme-10 .nav-slim {
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    border-inline-end: none;
+    border-inline-start: 1px solid #1f2937;
+}
+
+body.rtl.theme-10 .layout-main {
+    margin-inline-start: 0;
+    margin-inline-end: 240px;
+}
+
+body.rtl.theme-10 footer {
+    margin-inline-start: 0;
+    margin-inline-end: 240px;
+}
+
+body.rtl.theme-10 .hero-content {
+    direction: rtl;
+}
+
+body.rtl.theme-10 .nav-slim a {
+    direction: rtl;
+    text-align: right;
+}
+
+body.rtl.theme-10 .nav-slim a i {
+    margin-inline-start: 0.75rem;
+    margin-inline-end: 0;
+}
+
+body.rtl.theme-10 .project-content {
+    text-align: right;
+}
+
+body.rtl.theme-10 .timeline-content {
+    direction: rtl;
 }
 
 @media (max-width: 768px) {
     body.theme-10 .nav-slim {
         position: static;
         width: 100%;
-        border-right: none;
+        border-inline-end: none;
+        border-inline-start: none;
         border-bottom: 1px solid #1f2937;
         flex-direction: row;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding: 1rem;
+    }
+
+    body.theme-10 .nav-slim .logo {
+        margin-bottom: 0;
+        font-size: 1.2rem;
     }
 
     body.theme-10 .nav-slim ul {
         flex-direction: row;
-        gap: 1rem;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    body.theme-10 .nav-slim a {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+        white-space: nowrap;
+    }
+
+    body.theme-10 .nav-slim a:hover {
+        transform: translateY(-2px);
+    }
+
+    body.rtl.theme-10 .nav-slim a:hover {
+        transform: translateY(-2px);
     }
 
     body.theme-10 .layout-main,
     body.theme-10 footer {
-        margin-left: 0;
+        margin-inline-start: 0;
+        margin-inline-end: 0;
+        padding-inline: 1rem;
+    }
+
+    body.theme-10 .layout-main {
+        padding-top: 2rem;
     }
 
     body.theme-10 .hero-content {
         flex-direction: column;
         text-align: center;
+        gap: 1.5rem;
+    }
+
+    body.theme-10 .hero-avatar img {
+        width: 120px;
+        height: 120px;
     }
 }
